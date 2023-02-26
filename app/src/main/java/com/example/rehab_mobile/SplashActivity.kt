@@ -19,6 +19,8 @@ class SplashActivity : AppCompatActivity() {
         videoView.setOnPreparedListener {
             videoView.start()
         }
+
+        // Since this is the launch activity, it will show the Splash Screen, delaying the intent to the MainActivity
         Handler().postDelayed({
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)

@@ -10,12 +10,19 @@ import android.widget.TextView
 import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var usernameEt: EditText
+    private lateinit var passwordEt: EditText
+    private lateinit var dbHelper: DatabaseHelper
+    private var username: String?=""
+    private var password: String?=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        usernameEt = findViewById(R.id.username)
+        passwordEt = findViewById(R.id.password)
+        dbHelper = DatabaseHelper(this)
         // onCreate will check if the user has logged in before
         // If the user has logged in before, it will send them to Rehapp's default home page
         // Otherwise, it will show the login page
@@ -53,4 +60,13 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Invalid Login Details", Toast.LENGTH_SHORT).show()
         }
     }
+    fun registerBtnClick(view:View){
+        val username = usernameEt.text.toString()
+        val password = passwordEt.text.toString()
+        val id = dbHelper.insertInfo(
+            username,password
+        )
+        Toast.makeText(this,"Information added successfully",Toast.LENGTH_LONG).show()
+    }
+
 }

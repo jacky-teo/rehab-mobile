@@ -10,8 +10,11 @@ object Constants {
 
     //Create Table Query
     const val CREATE_TABLE = ("CREATE TABLE " + TABLE_NAME + "(" +
-            ID + "INTEGER PRIMARY KEY AUTOINCREMENT," +
+            ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             USERNAME + " TEXT," +
-            PASSWORD + " TEXT,"
+            PASSWORD + " TEXT"
             + "); ")
+    //Pre Populate DB
+    const val INSERT_DATA = ("INSERT INTO TABLE "+ TABLE_NAME +"( "+USERNAME+", "+ PASSWORD +
+                             " ) VALUES ('admin', 'admin') ")
 }

@@ -11,6 +11,7 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
     Constants.DB_VERSION) {
     override fun onCreate(db: SQLiteDatabase?) {
         db!!.execSQL(Constants.CREATE_TABLE)
+        db!!.execSQL(Constants.INSERT_DATA)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {

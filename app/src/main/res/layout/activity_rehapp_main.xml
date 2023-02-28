@@ -5,16 +5,20 @@
     android:id="@+id/logoutBtn"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
     tools:context=".RehappMainActivity">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        android:onClick="logoutBtnClick"
-        tools:layout_editor_absoluteX="151dp"
-        tools:layout_editor_absoluteY="346dp" />
+
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:id="@+id/viewAccountBtn"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="top|end"
+        android:src="@drawable/icon"
+        android:onClick="viewAccountBtnClick"
+        app:civ_border_width="2dp"
+        />
+
 </LinearLayout>

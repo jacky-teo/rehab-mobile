@@ -4,18 +4,14 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
     private lateinit var usernameEt: EditText
     private lateinit var passwordEt: EditText
     private lateinit var dbHelper: DatabaseHelper
-    private var username: String?=""
-    private var password: String?=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,32 +33,33 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun verify(username: String, password: String): Boolean {
-        val userData = HashMap<String,String>()
+        if (username.isEmpty() || password.isEmpty()) {
+            return false
+        }
+        val userData = HashMap<String, String>()
         // Check that user credentials are correct
         // Extract all records of user and returns if username and password match hashmap
         val userInfo = dbHelper.getAllRecords()
-        for (info in userInfo){
+        for (info in userInfo) {
             userData[info.username] = info.password
         }
-        if (userData.containsKey(username)){
-            if(userData[username] == password){
+        if (userData.containsKey(username)) {
+            if (userData[username] == password) {
                 return true
             }
             return false
         }
         return false
-
     }
+
     fun loginBtnClick(view: View) {
         val username = usernameEt.text.toString()
         val password = passwordEt.text.toString()
 
-        if(verify(username, password)) {
+        if (verify(username, password)) {
             // True
             // 1. Save the login state so the user will not have to re-login in the future
             // 2. Redirect user to Rehapp's default home page
-
-
             val sharedPreferences = getSharedPreferences("rehapp_login", Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
             editor.putBoolean("logged_in", true)
@@ -73,16 +70,22 @@ class MainActivity : AppCompatActivity() {
         } else {
             // False
             // 1. Alert the user that credentials are wrong
-            Toast.makeText(this, "Invalid Login Details", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show()
         }
     }
-    fun registerBtnClick(view:View){
+
+    fun registerBtnClick(view: View) {
         val username = usernameEt.text.toString()
         val password = passwordEt.text.toString()
-        val id = dbHelper.insertInfo(
-            username,password
-        )
-        Toast.makeText(this,"Information added successfully",Toast.LENGTH_LONG).show()
+        if (username.isEmpty() && password.isEmpty()) {
+            Toast.makeText(this, "Invalid details", Toast.LENGTH_LONG).show()
+        } else {
+            val id = dbHelper.insertInfo(
+                username, password
+            )
+            Toast.makeText(this, "Information added successfully", Toast.LENGTH_LONG).show()
+
+        }
     }
 
 }

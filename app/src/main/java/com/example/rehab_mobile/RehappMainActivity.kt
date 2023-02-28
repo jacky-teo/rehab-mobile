@@ -5,6 +5,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class RehappMainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,7 +14,18 @@ class RehappMainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_rehapp_main)
     }
 
-    // Placeholder, to check that the login state is working)
+    // Produces the Bottom Sheet containing User Settings
+    fun viewAccountBtnClick(view: View) {
+        val bottomSheetDialog = BottomSheetDialog(this)
+        val bottomView = layoutInflater.inflate(R.layout.bottom_sheet, null)
+        bottomSheetDialog.setContentView(bottomView)
+        bottomSheetDialog.show()
+        bottomView.findViewById<Button>(R.id.btn_close).setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+    }
+
+    // Logout button present in the Bottom Sheet
     fun logoutBtnClick(view: View) {
         val sharedPreferences = getSharedPreferences("rehapp_login", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()

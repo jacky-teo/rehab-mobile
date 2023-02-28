@@ -30,4 +30,42 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
         db.close()
         return id
     }
+
+    fun getAllRecords(): ArrayList<ModelRecord>{
+        val recordList = ArrayList<ModelRecord>()
+        val selectQuery = "SELECT * FROM ${Constants.TABLE_NAME}"
+        val db = this.writableDatabase
+        val cursor =db.rawQuery(selectQuery,null)
+        if(cursor.moveToNext()){
+            do{
+                val modelRecord = ModelRecord(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.USERNAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.PASSWORD))
+                )
+                recordList.add(modelRecord)
+            }while(cursor.moveToNext())
+        }
+        db.close()
+        return recordList
+    }
+    fun searchRecords(query: String): ArrayList<ModelRecord>{
+        val recordList = ArrayList<ModelRecord>()
+        val selectQuery = "SELECT * FROM ${Constants.TABLE_NAME} WHERE ${Constants.USERNAME} LIKE $query"
+        val db = this.writableDatabase
+        val cursor =db.rawQuery(selectQuery,null)
+        if(cursor.moveToNext()){
+            do{
+                val modelRecord = ModelRecord(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.USERNAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.PASSWORD))
+                )
+                recordList.add(modelRecord)
+            }while(cursor.moveToNext())
+        }
+        db.close()
+        return recordList
+    }
+
 }

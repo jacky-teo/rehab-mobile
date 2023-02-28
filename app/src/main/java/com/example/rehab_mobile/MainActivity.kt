@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -36,17 +37,32 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun verify(username: String, password: String): Boolean {
+        val userData = HashMap<String,String>()
         // Check that user credentials are correct
-        // Placeholder (true) for now until database has been setup
-        return true
+        // Extract all records of user and returns if username and password match hashmap
+        val userInfo = dbHelper.getAllRecords()
+        for (info in userInfo){
+            userData[info.username] = info.password
+        }
+        if (userData.containsKey(username)){
+            if(userData[username] == password){
+                return true
+            }
+            return false
+        }
+        return false
+
     }
     fun loginBtnClick(view: View) {
-        val username = findViewById<EditText>(R.id.username).toString()
-        val password = findViewById<EditText>(R.id.password).toString()
+        val username = usernameEt.text.toString()
+        val password = passwordEt.text.toString()
+
         if(verify(username, password)) {
             // True
             // 1. Save the login state so the user will not have to re-login in the future
             // 2. Redirect user to Rehapp's default home page
+
+
             val sharedPreferences = getSharedPreferences("rehapp_login", Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
             editor.putBoolean("logged_in", true)

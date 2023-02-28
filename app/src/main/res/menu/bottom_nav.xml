@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Home"
-        android:id="@+id/home"
-        android:icon="@drawable/house"/>
+    <item android:title="@string/menu_home"
+        android:id="@+id/summary"
+        android:icon="@drawable/summary_icon"/>
 
-    <item android:title="Progress"
-        android:id="@+id/progress"
-        android:icon="@drawable/calendar_range"/>
-
-    <item android:title="Games"
-        android:id="@+id/games"
-        android:icon="@drawable/joystick"/>
-
-    <item android:title="Awards"
+    <item android:title="@string/menu_awards"
         android:id="@+id/awards"
-        android:icon="@drawable/trophy_fill"/>
+        android:icon="@drawable/awards_icon"/>
 </menu>

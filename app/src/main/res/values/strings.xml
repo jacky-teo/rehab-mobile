@@ -9,6 +9,11 @@
     <string name="healthDetails">Health Details</string>
     <string name="medicalID">Medical ID</string>
     <string name="nightMode">Night Mode</string>
+
     <string name="summary">Summary</string>
     <string name="activity">Activity</string>
+
+    <!--  menu string values  -->
+    <string name="menu_home">Summary</string>
+    <string name="menu_awards">Awards</string>
 </resources>

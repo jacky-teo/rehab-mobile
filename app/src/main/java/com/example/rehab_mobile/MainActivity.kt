@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("rehapp_login", Context.MODE_PRIVATE)
         val isLoggedIn = sharedPreferences.getBoolean("logged_in", false)
         if (isLoggedIn) {
-            val intent = Intent(this, RehappMainActivity::class.java)
+            val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
             val editor = sharedPreferences.edit()
             editor.putBoolean("logged_in", true)
             editor.apply()
-            val intent = Intent(this, RehappMainActivity::class.java)
+            val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
             finish()
         } else {

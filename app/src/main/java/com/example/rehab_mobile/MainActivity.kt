@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         val userData = HashMap<String, String>()
         // Check that user credentials are correct
         // Extract all records of user and returns if username and password match hashmap
-        val userInfo = dbHelper.getAllRecords()
+        val userInfo = dbHelper.searchUserRecords(username)
         for (info in userInfo) {
             userData[info.username] = info.password
         }
@@ -77,17 +77,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun registerBtnClick(view: View) {
-        val username = usernameEt.text.toString()
-        val password = passwordEt.text.toString()
-        if (username.isEmpty() && password.isEmpty()) {
-            Toast.makeText(this, "Invalid details", Toast.LENGTH_LONG).show()
-        } else {
-            val id = dbHelper.insertInfo(
-                username, password
-            )
-            Toast.makeText(this, "Information added successfully", Toast.LENGTH_LONG).show()
-
-        }
+        //TODO CREATE REGISTER PAGE
     }
-
+//        val username = usernameEt.text.toString()
+//        val password = passwordEt.text.toString()
+//        if (username.isEmpty() && password.isEmpty()) {
+//            Toast.makeText(this, "Invalid details", Toast.LENGTH_LONG).show()
+//        } else {
+//            val id = dbHelper.insertUserInfo(
+//                username, password
+//            )
+//            Toast.makeText(this, "Information added successfully", Toast.LENGTH_LONG).show()
+//
+//        }
+//    }
 }

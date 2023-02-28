@@ -9,4 +9,6 @@
     <string name="healthDetails">Health Details</string>
     <string name="medicalID">Medical ID</string>
     <string name="nightMode">Night Mode</string>
+    <string name="summary">Summary</string>
+    <string name="activity">Activity</string>
 </resources>

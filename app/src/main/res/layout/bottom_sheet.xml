@@ -174,7 +174,7 @@
             android:textAllCaps="false"
             android:textColor="#576A8A"
             android:textSize="16sp"
-            android:textStyle="bold"
+
             tools:layout_editor_absoluteX="151dp"
             tools:layout_editor_absoluteY="320dp" />
     </LinearLayout>

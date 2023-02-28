@@ -4,14 +4,24 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RehappMainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rehapp_main)
+        val calendar = Calendar.getInstance()
+        val currentDate = calendar.time
+        val dateFormat = SimpleDateFormat("EEEE, dd MMM")
+        val formattedDate = dateFormat.format(currentDate)
+        val dateTV = findViewById<TextView>(R.id.dateText)
+        dateTV.text = formattedDate
     }
 
     // Produces the Bottom Sheet containing User Settings

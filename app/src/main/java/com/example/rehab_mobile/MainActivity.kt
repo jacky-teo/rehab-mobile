@@ -11,8 +11,10 @@ import android.widget.TextView
 import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
+    //Login
     private lateinit var usernameEt: EditText
     private lateinit var passwordEt: EditText
+
     private lateinit var dbHelper: DatabaseHelper
     private var username: String?=""
     private var password: String?=""
@@ -40,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         val userData = HashMap<String,String>()
         // Check that user credentials are correct
         // Extract all records of user and returns if username and password match hashmap
-        val userInfo = dbHelper.getAllRecords()
+        val userInfo = dbHelper.searchUserRecords(username)
         for (info in userInfo){
             userData[info.username] = info.password
         }
@@ -77,12 +79,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
     fun registerBtnClick(view:View){
-        val username = usernameEt.text.toString()
-        val password = passwordEt.text.toString()
-        val id = dbHelper.insertInfo(
-            username,password
-        )
-        Toast.makeText(this,"Information added successfully",Toast.LENGTH_LONG).show()
+        //TODO Create activity page for register
+//        val username = usernameEt.text.toString()
+//        val password = passwordEt.text.toString()
+//        val id = dbHelper.insertUserInfo(
+//            username,password
+//        )
+//        Toast.makeText(this,"Information added successfully",Toast.LENGTH_LONG).show()
     }
 
 }

@@ -1,5 +1,12 @@
 <resources>
-    <string name="app_name">rehab-mobile</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Rehapp</string>
+    <string name="done">Done</string>
+    <string name="logout">Logout</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="healthDetails">Health Details</string>
+    <string name="medicalID">Medical ID</string>
+    <string name="nightMode">Night Mode</string>
 </resources>

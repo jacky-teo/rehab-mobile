@@ -74,6 +74,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     fun stepActivityBtnClick(view: View){
-
+        val intent = Intent(this,StepActivity::class.java )
+        startActivity(intent)
+        finish()
     }
 }

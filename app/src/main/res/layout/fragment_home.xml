@@ -83,6 +83,13 @@
                 android:text="placeholder" />
         </LinearLayout>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/stepActivityButton"
+            android:onClick="stepActivityBtnClick"
+            android:text="Step Activity"
+            />
     </LinearLayout>
 
 </LinearLayout>

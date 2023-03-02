@@ -117,7 +117,7 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
 
     // Update Activity Info
     fun updateActivityRecords(
-        activtyName: String,
+        activityName: String,
         activitydate: String,
         username: String,
         points: Int,
@@ -125,18 +125,21 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
     ): Int {
         val db = this.writableDatabase
         val values = ContentValues()
-        val condition = "WHERE ${Constants.USERNAME} $username AND ${Constants.ACTIVITYDATE} = $activitydate"
-        values.put(activtyName, activityValue)
+        val condition = "${Constants.USERNAME}= '$username' AND ${Constants.ACTIVITYDATE} LIKE '$activitydate' "
+        values.put(activityName, activityValue)
         values.put(Constants.POINTS, points)
-
+//        val updateQuery ="UPDATE ${Constants.ACTIVITY_TABLE_NAME} SET $activtyName = $activityValue, ${Constants.POINTS} WHERE ${Constants.USERNAME} = $username AND ${Constants.ACTIVITYDATE} = $activitydate"
 //        val updateQuery = "UPDATE table " +
 //                "SET "+ activtyName + " = " + activityValue +
 //                "    POINTS = "+ points +
 //                " WHERE USERNAME = " + username+" AND "+ "ACTIVITYDATE = "+activitydate +
 //                "LIMIT row_count OFFSET offset;"
 //        db.rawQuery(updateQuery,null)
-        return db.update(Constants.ACTIVITY_TABLE_NAME, values, condition, null)
+
+        val id = db.update(Constants.ACTIVITY_TABLE_NAME, values, condition, null)
         db.close()
+        return id
+
     }
 
     // Read All Activity Info

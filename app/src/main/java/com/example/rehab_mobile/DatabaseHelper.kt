@@ -125,7 +125,7 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
     ): Int {
         val db = this.writableDatabase
         val values = ContentValues()
-        val condition = "WHERE USERNAME = $username AND ACTIVITYDATE = $activitydate"
+        val condition = "WHERE ${Constants.USERNAME} $username AND ${Constants.ACTIVITYDATE} = $activitydate"
         values.put(activtyName, activityValue)
         values.put(Constants.POINTS, points)
 

@@ -72,4 +72,8 @@ class HomeActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+
+    fun stepActivityBtnClick(view: View){
+
+    }
 }

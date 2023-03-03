@@ -1,85 +1,166 @@
 package com.example.rehab_mobile
 
+import android.content.Context
+import android.content.pm.PackageManager
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.mikhaellopez.circularprogressbar.CircularProgressBar
+import org.w3c.dom.Text
+import kotlin.math.sqrt
 
-class StepActivity : AppCompatActivity() {
+class StepActivity : AppCompatActivity(), SensorEventListener {
+    private var magnitudePreviousStep: Double = 0.0
+    private val ACTIVITY_RECOGNITION_REQUEST_CODE: Int =100
+    private var sensorManager: SensorManager? = null
+    private var running: Boolean = false
+    private var totalSteps = 0f
+    private var previousTotalSteps = 0f
+
     private lateinit var dbHelper: DatabaseHelper
-    private lateinit var usernameEt: EditText
-    private lateinit var activtydateEt: EditText
-    private lateinit var pointsEt: EditText
-    private lateinit var stepEt: EditText
-    private lateinit var balanceEt: EditText
 
-    private var username: String? = "admin"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_step)
+
+        if(isPermissionGranted()){
+            requestPermission()
+        }
+
+        loadData()
+        resetSteps()
         dbHelper = DatabaseHelper(this)
-        usernameEt = findViewById(R.id.username)
-        activtydateEt = findViewById(R.id.activitydate)
-        pointsEt = findViewById(R.id.points)
-        stepEt = findViewById(R.id.stepactivity)
-        balanceEt = findViewById(R.id.ballbalance)
-    }
-    fun getAllBtnClick(view: View){
-        val allActivity = dbHelper.getAllActivityRecords()
-        for (activity in allActivity){
-            Log.d("username",activity.username)
-            Log.d("date",activity.activtydate)
-            Log.d("points",activity.points.toString())
-            Log.d("step",activity.stepitup.toString())
-            Log.d("ballbalance",activity.ballbalance.toString())
-        }
-    }
-
-    fun getUserActivityBtnClick(view: View){
-        val userActivty = dbHelper.searchActivityRecords("admin","28/2/2022")
-        for (activity in userActivty){
-            Log.d("username",activity.username)
-            Log.d("date",activity.activtydate)
-            Log.d("points",activity.points.toString())
-            Log.d("step",activity.stepitup.toString())
-            Log.d("ballbalance",activity.ballbalance.toString())
-        }
+        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
     }
 
-    fun createActivityBtnClick(view: View){
-        val username = usernameEt.text.toString()
-        val activtydate = activtydateEt.text.toString()
-        val points = pointsEt.text.toString().toInt()
-        val step = stepEt.text.toString().toInt()
-        val balance = balanceEt.text.toString().toInt()
-        val insert = dbHelper.insertActivity(username,activtydate,points,step,balance)
-        val userActivty = dbHelper.searchActivityRecords(username,activtydate)
-        for (activity in userActivty){
-            Log.d("username",activity.username)
-            Log.d("date",activity.activtydate)
-            Log.d("points",activity.points.toString())
-            Log.d("step",activity.stepitup.toString())
-            Log.d("ballbalance",activity.ballbalance.toString())
+    private fun requestPermission() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+
+            ActivityCompat.requestPermissions(this,arrayOf(android.Manifest.permission.ACTIVITY_RECOGNITION),
+            ACTIVITY_RECOGNITION_REQUEST_CODE)
         }
     }
 
-    fun updateActivityBtnClick(view: View){
-        val activtyName = "STEPITUP"
-        val username = usernameEt.text.toString()
-        val activtydate = activtydateEt.text.toString()
-        val step = stepEt.text.toString().toInt()
-        val points = pointsEt.text.toString().toInt()
-        val update = dbHelper.updateActivityRecords(activtyName,activtydate,username,points,step)
-        val userActivty = dbHelper.searchActivityRecords(username,activtydate)
-        for (activity in userActivty){
-            Log.d("username",activity.username)
-            Log.d("date",activity.activtydate)
-            Log.d("points",activity.points.toString())
-            Log.d("step",activity.stepitup.toString())
-            Log.d("ballbalance",activity.ballbalance.toString())
+    private fun isPermissionGranted(): Boolean {
+        // Check user have permissions enabled
+        return ContextCompat.checkSelfPermission(this,android.Manifest.permission.ACTIVITY_RECOGNITION) != PackageManager.PERMISSION_GRANTED
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when(requestCode){
+            ACTIVITY_RECOGNITION_REQUEST_CODE ->{
+                if(((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED))){
+
+                }
+            }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        running = true
+        val sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        val stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
+        val detectorSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR)
+        val accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR)
+        when{
+            stepSensor != null -> {
+                sensorManager.registerListener(this,stepSensor,SensorManager.SENSOR_DELAY_GAME)
+            }
+            detectorSensor != null -> {
+                sensorManager.registerListener(this,detectorSensor,SensorManager.SENSOR_DELAY_GAME)
+            }
+            accelerometer != null -> {
+                sensorManager.registerListener(this,accelerometer,SensorManager.SENSOR_DELAY_GAME)
+            }
+            else ->{
+                Toast.makeText(this,"No Sensor detected on this device",Toast.LENGTH_SHORT).show()
+            }
+
+        }
+    }
+
+    override fun onPause(){
+        super.onPause()
+        running = false
+        sensorManager?.unregisterListener(this)
+    }
+    override fun onSensorChanged(event: SensorEvent?) {
+        var stepsTaken = findViewById<TextView>(R.id.stepsTaken)
+        var cirbar = findViewById<CircularProgressBar>(R.id.progress_circular)
+
+        if(event!!.sensor.type == Sensor.TYPE_ACCELEROMETER){
+            // we need to detect the magnitutede
+            val xaccel: Float = event.values[0]
+            val yaccel: Float = event.values[1]
+            val zaccel: Float = event.values[2]
+            val magnitude: Double = sqrt((xaccel*xaccel + yaccel *yaccel +zaccel*zaccel).toDouble())
+            var magnitudeDelta: Double = magnitude-magnitudePreviousStep
+            magnitudePreviousStep = magnitude
+            if (magnitudeDelta > 6){
+                totalSteps++
+            }
+            val step: Int = totalSteps.toInt()
+            stepsTaken.text = step.toString()
+            cirbar.apply {
+                setProgressWithAnimation(step.toFloat())
+            }
+        }
+        else{
+            if (running){
+                totalSteps = event!!.values[0]
+                val currentSteps = totalSteps.toInt() - previousTotalSteps.toInt()
+                stepsTaken.text = currentSteps.toString()
+                cirbar.apply{
+                    setProgressWithAnimation(currentSteps.toFloat())
+                }
+            }
+        }
+
+
+    }
+    private fun saveData(){
+        val sharedPreferences = getSharedPreferences("steps",Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putFloat("previousTotalSteps",previousTotalSteps)
+        editor.apply()
+    }
+    private fun loadData(){
+        val sharedPreferences =getSharedPreferences("steps",Context.MODE_PRIVATE)
+        val savedNumber: Float= sharedPreferences.getFloat("currentStep",0f)
+        Log.d("StepActivity", "$savedNumber")
+        previousTotalSteps = savedNumber
+    }
+    private fun resetSteps(){
+        var stepsTakenTv = findViewById<TextView>(R.id.stepsTaken)
+        stepsTakenTv.setOnClickListener {
+            Toast.makeText(this,"Long tap to reset steps", Toast.LENGTH_SHORT).show()
+        }
+        stepsTakenTv.setOnLongClickListener {
+            previousTotalSteps = totalSteps
+            stepsTakenTv.text = 0.toString()
+            saveData()
+            true
+        }
+    }
+    override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
 
     }
 }

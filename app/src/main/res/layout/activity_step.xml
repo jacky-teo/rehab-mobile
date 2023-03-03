@@ -1,86 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".StepActivity"
     >
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="280dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
 
-        android:hint="Username"
-        android:inputType="text"/>
-    <EditText
-        android:id="@+id/activitydate"
-        android:layout_width="280dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
-        android:hint="Date"
-        android:inputType="text"/>
-    <EditText
-        android:id="@+id/points"
-        android:layout_width="280dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
-
-        android:inputType="number"
-        android:hint="Points" />
-    <EditText
-        android:id="@+id/stepactivity"
-        android:layout_width="280dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
-
-        android:hint="Step It Up Points"
-        android:inputType="number"
-        />
-    <EditText
-        android:id="@+id/ballbalance"
-        android:layout_width="280dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
-
-        android:hint="Ball Balance Points"
-        android:inputType="number"/>
-
-    <Button
+    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        app:cpb_background_progressbar_color="#E4D0C4"
+        app:cpb_background_progressbar_width="20dp"
+        app:cpb_progress_max="2500"
+        app:cpb_progressbar_color="#576A8A"
+        app:cpb_progressbar_width="15dp"
+        app:cpb_round_border="true" />
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/getActivity"
-        android:text="Get Activity"
-        android:layout_gravity="center"
-        android:onClick="getAllBtnClick"
+        android:id="@+id/stepsTaken"
+        android:layout_centerInParent="true"
+        android:text="0"
+        android:textColor="#576A8A"
+        android:textSize="40sp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/totalMax"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/stepsTaken"
+        android:text="/2500"
+        android:textColor="#576A8A"
+        android:textSize="14sp"
         />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/getUserActivity"
-        android:text="Get User Activity"
-        android:layout_gravity="center"
-        android:onClick="getUserActivityBtnClick"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/updateActivity"
-        android:text="Update Activity"
-        android:layout_gravity="center"
-        android:onClick="updateActivityBtnClick"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/createActivty"
-        android:text="Create Activity"
-        android:layout_gravity="center"
-        android:onClick="createActivityBtnClick"
-        />
 
-</LinearLayout>
+</RelativeLayout>

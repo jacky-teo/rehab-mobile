@@ -128,14 +128,6 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
         val condition = "${Constants.USERNAME}= '$username' AND ${Constants.ACTIVITYDATE} LIKE '$activitydate' "
         values.put(activityName, activityValue)
         values.put(Constants.POINTS, points)
-//        val updateQuery ="UPDATE ${Constants.ACTIVITY_TABLE_NAME} SET $activtyName = $activityValue, ${Constants.POINTS} WHERE ${Constants.USERNAME} = $username AND ${Constants.ACTIVITYDATE} = $activitydate"
-//        val updateQuery = "UPDATE table " +
-//                "SET "+ activtyName + " = " + activityValue +
-//                "    POINTS = "+ points +
-//                " WHERE USERNAME = " + username+" AND "+ "ACTIVITYDATE = "+activitydate +
-//                "LIMIT row_count OFFSET offset;"
-//        db.rawQuery(updateQuery,null)
-
         val id = db.update(Constants.ACTIVITY_TABLE_NAME, values, condition, null)
         db.close()
         return id

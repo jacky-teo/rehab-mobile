@@ -1,17 +1,13 @@
 package com.example.rehab_mobile
 
-import android.content.Context
+
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.mikhaellopez.circularimageview.CircularImageView
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,6 +25,7 @@ class Home : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val act = activity
 
+
         val calendar = Calendar.getInstance()
         val currentDate = calendar.time
         val dateFormat = SimpleDateFormat("EEEE, dd MMM")
@@ -36,7 +33,17 @@ class Home : Fragment() {
         val dateTV = act!!.findViewById<TextView>(R.id.dateText)
         dateTV.text = formattedDate
 
+        val stepActivityLayout = act.findViewById<LinearLayout>(R.id.stepActivityLayout) as LinearLayout
+        stepActivityLayout.setOnClickListener {
+            val intent = Intent(act, StepActivity::class.java)
+            act.startActivity(intent)
+            act.finish()
+        }
+
+
     }
+
+
 
 
 }

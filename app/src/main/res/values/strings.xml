@@ -9,9 +9,15 @@
     <string name="healthDetails">Health Details</string>
     <string name="medicalID">Medical ID</string>
     <string name="nightMode">Night Mode</string>
+    <string name="features">Features</string>
 
     <string name="summary">Summary</string>
-    <string name="activity">Activity</string>
+    <string name="dailyActivities">Daily Activities</string>
+    <string name="steps">Steps</string>
+    <string name="distance">Distance</string>
+
+    <string name="ballGame">Ball Game</string>
+    <string name="stepGame">Step-it-Up Game</string>
 
     <!--  menu string values  -->
     <string name="menu_home">Summary</string>

@@ -137,7 +137,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corners"
         android:layout_marginBottom="4dp"
-        android:padding="12dp">
+        android:padding="12dp"
+        android:onClick="viewBallGameInfo">
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:layout_width="48dp"
@@ -179,7 +180,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:background="@drawable/rounded_corners"
-        android:padding="12dp">
+        android:padding="12dp"
+        android:onClick="viewStepsInfo">
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:layout_width="48dp"

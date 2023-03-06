@@ -23,7 +23,7 @@
         android:background="#FAFAFA"
         app:compatShadowEnabled="true"
         app:itemIconTint="@drawable/nav_item_color_selected"
-        app:itemTextColor="@color/primary"
+        app:itemTextColor="@color/ocean"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_nav">
 

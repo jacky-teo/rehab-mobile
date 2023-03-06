@@ -4,15 +4,11 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.rehab_mobile.databinding.ActivityHomeBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import java.text.SimpleDateFormat
-import java.util.*
 
 class HomeActivity : AppCompatActivity() {
 
@@ -26,19 +22,27 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // when page first launched, display home fragment
-        replaceFragment(Home())
+//        replaceFragment(Home())
 
         // declare bottom navbar listener
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.summary -> replaceFragment(Home())
-                R.id.awards -> replaceFragment(Awards())
+                R.id.user -> replaceFragment(User())
 
                 else -> {
 
                 }
             }
             true
+        }
+
+        // to receive intent from awards activity
+        val it = intent     //getIntent()
+        if (it.getStringExtra("nav_state") == "user") {
+            replaceFragment(User())
+        } else {
+            replaceFragment(Home())
         }
     }
 
@@ -75,6 +79,28 @@ class HomeActivity : AppCompatActivity() {
 
     fun stepActivityBtnClick(view: View){
         val intent = Intent(this,StepActivity::class.java )
+        startActivity(intent)
+        finish()
+    }
+
+    // Go to ball game info activity
+    fun viewBallGameInfo(view: View) {
+        val intent = Intent(this,BallInfoActivity::class.java )
+        startActivity(intent)
+        finish()
+    }
+
+
+    // Go to steps tracker info activity
+    fun viewStepsInfo(view: View) {
+        val intent = Intent(this,StepInfoActivity::class.java )
+        startActivity(intent)
+        finish()
+    }
+
+    // Go to awards activity
+    fun viewAwards(view: View) {
+        val intent = Intent(this,AwardsActivity::class.java )
         startActivity(intent)
         finish()
     }

@@ -9,6 +9,6 @@
     <color name="white">#FFFFFFFF</color>
 
     <!--  custom colors  -->
-    <color name="primary">#576A8B</color>
+    <color name="ocean">#576A8B</color>
     <color name="gray">#D4D4D4</color>
 </resources>

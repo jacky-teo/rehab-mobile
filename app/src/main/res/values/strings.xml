@@ -15,11 +15,18 @@
     <string name="dailyActivities">Daily Activities</string>
     <string name="steps">Steps</string>
     <string name="distance">Distance</string>
+    <string name="awards">Awards</string>
 
     <string name="ballGame">Ball Game</string>
     <string name="stepGame">Step-it-Up Game</string>
 
+    <!--  user features' buttons  -->
+    <string name="awardsButton">Awards ✨</string>
+    <string name="ballGameButton">Ball Game ⚽</string>
+    <string name="stepGameButton">Step-it-Up Game 👣</string>
+
     <!--  menu string values  -->
     <string name="menu_home">Summary</string>
-    <string name="menu_awards">Awards</string>
+    <string name="menu_user">User</string>
+
 </resources>

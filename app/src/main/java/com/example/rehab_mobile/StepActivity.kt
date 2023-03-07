@@ -18,6 +18,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 import org.w3c.dom.Text
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.Date
 import kotlin.math.sqrt
 
 class StepActivity : AppCompatActivity(), SensorEventListener {
@@ -27,16 +30,20 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
     private var running: Boolean = false
     private var totalSteps = 0f
     private var previousTotalSteps = 0f
+    private var username: String? = ""
 
     private lateinit var dbHelper: DatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_step)
+        val sharedPreference = getSharedPreferences("rehapp_login", Context.MODE_PRIVATE)
+        username = sharedPreference.getString("username","")
 
         if(isPermissionGranted()){
             requestPermission()
         }
+
 
         loadData()
         resetSteps()
@@ -122,6 +129,25 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
             cirbar.apply {
                 setProgressWithAnimation(step.toFloat())
             }
+            if(step == 10){
+                Toast.makeText(this,"Congratulations you have completed the exercise", Toast.LENGTH_SHORT).show()
+                val formatter = SimpleDateFormat("dd-MM-yyyy")
+                val date = Date()
+                val currentDate = formatter.format(date).toString()
+                // Find if entry exist. If does exist for this user and today, update it to db else
+                if(dbHelper.searchActivityRecords(username!!,currentDate).isEmpty()){
+                    // Create entry for today along with the points
+                    dbHelper.insertActivity(username!!,currentDate,100,step,0)
+                }
+                else{
+                    //Update db
+                    val currentData = dbHelper.searchActivityRecords(username!!,currentDate)[0]
+                    val newPoints = currentData.points + 100
+                    val newValue = currentData.stepitup + step
+                    dbHelper.updateActivityRecords(Constants.STEPITUP,currentDate,username!!,newPoints,step)
+                }
+
+            }
         }
         else{
             if (running){
@@ -140,6 +166,7 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
         val sharedPreferences = getSharedPreferences("steps",Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putFloat("previousTotalSteps",previousTotalSteps)
+        editor.putString("username",username)
         editor.apply()
     }
     private fun loadData(){
@@ -159,6 +186,9 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
             saveData()
             true
         }
+    }
+    fun endActivityBtn(){
+        finish()
     }
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
 

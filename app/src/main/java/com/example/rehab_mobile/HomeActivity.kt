@@ -17,7 +17,13 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+//        val formatter = SimpleDateFormat("dd-MM-yyyy")
+//        val date = Date()
+//        val currentDate = formatter.format(date).toString()
+//        val sharedPreferences = getSharedPreferences("rehapp_login", Context.MODE_PRIVATE)
+//        val username = sharedPreferences.getString("username","")
+//        val userActivity = dbHelper.searchActivityRecords(username!!, currentDate)
+//        Log.d("User Activity", userActivity.toString())
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

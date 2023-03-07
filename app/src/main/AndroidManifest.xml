@@ -14,6 +14,9 @@
         android:theme="@style/Theme.Rehabmobile"
         tools:targetApi="31">
         <activity
+            android:name=".BallActivity"
+            android:exported="false" />
+        <activity
             android:name=".StepInfoActivity"
             android:exported="false" />
         <activity

@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity() {
             val sharedPreferences = getSharedPreferences("rehapp_login", Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
             editor.putBoolean("logged_in", true)
+                editor.putString("username",username)
             editor.apply()
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)

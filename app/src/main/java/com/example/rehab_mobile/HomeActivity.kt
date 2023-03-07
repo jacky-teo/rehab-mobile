@@ -2,10 +2,11 @@ package com.example.rehab_mobile
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.rehab_mobile.databinding.ActivityHomeBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -14,6 +15,14 @@ class HomeActivity : AppCompatActivity() {
 
     //initiate binding variable
     private lateinit var binding : ActivityHomeBinding
+
+    // receive back intent from awards activity
+    private val getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+    {
+        if (it.resultCode == RESULT_OK) {
+            replaceFragment(User())
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +37,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // when page first launched, display home fragment
-//        replaceFragment(Home())
+        replaceFragment(Home())
 
         // declare bottom navbar listener
         binding.bottomNavigationView.setOnItemSelectedListener {
@@ -41,14 +50,6 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
             true
-        }
-
-        // to receive intent from awards activity
-        val it = intent     //getIntent()
-        if (it.getStringExtra("nav_state") == "user") {
-            replaceFragment(User())
-        } else {
-            replaceFragment(Home())
         }
     }
 
@@ -106,8 +107,9 @@ class HomeActivity : AppCompatActivity() {
 
     // Go to awards activity
     fun viewAwards(view: View) {
-        val intent = Intent(this,AwardsActivity::class.java )
-        startActivity(intent)
-        finish()
+        val intent = Intent(this, AwardsActivity::class.java)
+        val requestCode = 123
+        startActivityForResult(intent, requestCode)
+
     }
 }

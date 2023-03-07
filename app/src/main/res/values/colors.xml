@@ -11,4 +11,5 @@
     <!--  custom colors  -->
     <color name="ocean">#576A8B</color>
     <color name="gray">#D4D4D4</color>
+    <color name="lightBrown">#BF7950</color>
 </resources>

@@ -7,17 +7,73 @@
     android:orientation="vertical"
     tools:context=".AwardsActivity">
 
+    <Button
+        android:id="@+id/backBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:onClick="returnToPrev"/>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="awards" />
+        android:layout_marginTop="25dp"
+        android:text="@string/pointsHeading"
+        android:textAlignment="center"
+        android:textColor="@color/ocean"
+        android:textSize="24sp" />
 
-    <Button
-        android:id="@+id/backBtn"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Back to main"
-        android:onClick="returnToPrev"/>
+        android:text="[Points]"
+        android:textAlignment="center"
+        android:textColor="@color/ocean"
+        android:textSize="38sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="25dp"
+        android:id="@+id/navButtons">
+
+        <Button
+            android:id="@+id/availableBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/pill_shape"
+            android:text="@string/availableButton"
+            android:textColor="@color/lightBrown"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:onClick="showAvailable"/>
+
+        <Button
+            android:id="@+id/redeemedBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/pill_shape"
+            android:text="@string/redeemedButton"
+            android:textColor="@color/lightBrown"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:onClick="showRedeemed"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/frame_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </FrameLayout>
+
+
 </LinearLayout>

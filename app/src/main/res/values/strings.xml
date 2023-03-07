@@ -22,11 +22,16 @@
 
     <!--  user features' buttons  -->
     <string name="awardsButton">Awards ✨</string>
-    <string name="ballGameButton">Ball Game ⚽</string>
-    <string name="stepGameButton">Step-it-Up Game 👣</string>
 
     <!--  menu string values  -->
     <string name="menu_home">Summary</string>
     <string name="menu_user">User</string>
+
+    <!--  awards page string values  -->
+    <string name="pointsHeading">Your Points:</string>
+    <string name="availableButton">Available</string>
+    <string name="redeemedButton">Redeemed</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

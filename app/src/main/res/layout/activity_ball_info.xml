@@ -8,9 +8,39 @@
     tools:context=".BallInfoActivity">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/sensitivityVal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Ball game info page" />
+        android:text="15"
+        android:layout_gravity="center"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sensitivity"
+            android:layout_gravity="center"
+            android:layout_marginRight="8dp"/>
+
+        <com.google.android.material.slider.Slider
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:valueFrom="1"
+            android:valueTo="50"
+            android:value="15"
+            android:id="@+id/slider"
+            android:stepSize="1"/>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Start Game"
+        android:id="@+id/startGameBtn"
+        android:onClick="startGameBtn"/>
 </LinearLayout>

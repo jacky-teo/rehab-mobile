@@ -58,22 +58,24 @@ class MainActivity : AppCompatActivity() {
         val username = usernameEt.text.toString()
         val password = passwordEt.text.toString()
 
-        if (verify(username, password)) {
-            // True
-            // 1. Save the login state so the user will not have to re-login in the future
-            // 2. Redirect user to Rehapp's default home page
-            val sharedPreferences = getSharedPreferences("rehapp_login", Context.MODE_PRIVATE)
-            val editor = sharedPreferences.edit()
-            editor.putBoolean("logged_in", true)
-            editor.apply()
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
-            finish()
-        } else {
-            // False
-            // 1. Alert the user that credentials are wrong
-            Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show()
-        }
+//        if (verify(username, password)) {
+//            // True
+//            // 1. Save the login state so the user will not have to re-login in the future
+//            // 2. Redirect user to Rehapp's default home page
+//            val sharedPreferences = getSharedPreferences("rehapp_login", Context.MODE_PRIVATE)
+//            val editor = sharedPreferences.edit()
+//            editor.putBoolean("logged_in", true)
+//            editor.apply()
+//            val intent = Intent(this, HomeActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        } else {
+//            // False
+//            // 1. Alert the user that credentials are wrong
+//            Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show()
+//        }
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
     }
 
     fun registerBtnClick(view: View) {

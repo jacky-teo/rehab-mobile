@@ -180,4 +180,27 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
         return recordList
     }
 
+    // Read Single User Activity Info
+    fun searchUserActivityRecords(username: String): ArrayList<ActivityModelRecord>{
+        val recordList = ArrayList<ActivityModelRecord>()
+        val selectQuery = "SELECT * FROM ${Constants.ACTIVITY_TABLE_NAME} WHERE ${Constants.USERNAME} LIKE '$username'"
+        val db = this.writableDatabase
+        val cursor =db.rawQuery(selectQuery,null)
+        if(cursor.moveToNext()){
+            do{
+                val activityModelRecord = ActivityModelRecord(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.USERNAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.ACTIVITYDATE)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.POINTS)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.STEPITUP)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.BALLBALANCE))
+                )
+                recordList.add(activityModelRecord)
+            }while(cursor.moveToNext())
+        }
+        db.close()
+        return recordList
+    }
+
 }

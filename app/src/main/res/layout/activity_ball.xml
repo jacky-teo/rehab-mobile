@@ -18,6 +18,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.891"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Exit"
+        android:background="@android:color/transparent"
+        android:onClick="exitBtn"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/circle"
         android:layout_width="wrap_content"

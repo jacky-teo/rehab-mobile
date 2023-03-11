@@ -15,12 +15,6 @@
         android:textSize="30sp"
         android:layout_marginBottom="100sp"
         android:layout_marginTop="50sp"/>
-    <TextView
-        android:id="@+id/sensitivityVal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="15"
-        android:layout_gravity="center"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,33 +23,46 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sensitivity"
-            android:layout_gravity="center"
-            android:layout_marginRight="8dp"/>
-
-        <com.google.android.material.slider.Slider
-            android:layout_width="300dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginRight="8dp"
+            android:text="Sensitivity"/>
+        <NumberPicker
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:valueFrom="1"
-            android:valueTo="50"
-            android:value="15"
-            android:id="@+id/slider"
-            android:stepSize="1"/>
+            android:id="@+id/sensitivityVal"/>
     </LinearLayout>
 
-    <Button
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Start Game"
-        android:id="@+id/startGameBtn"
-        android:onClick="startGameBtn"/>
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Start Game"
+            android:id="@+id/startGameBtn"
+            android:onClick="startGameBtn"
+            android:background="#E5D1C5"
+            android:textColor="#576A8B"
+            android:layout_marginRight="10sp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Statistics"
+            android:id="@+id/statistics"
+            android:onClick="displayStatistics"
+            android:background="@android:color/transparent"
+            android:textColor="#576A8B"/>
+    </LinearLayout>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Back"
         android:id="@+id/backBtn"
-        android:onClick="backBtn"/>
+        android:onClick="backBtn"
+        android:textColor="#000000"/>
 </LinearLayout>

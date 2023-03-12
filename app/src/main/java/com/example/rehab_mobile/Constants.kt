@@ -5,7 +5,9 @@ object Constants {
     const val DB_VERSION = 1
     const val USER_TABLE_NAME = "USERS"
     const val ACTIVITY_TABLE_NAME = "ACTIVITIES"
+    const val POINTS_TABLE_NAME = "POINTS"
     const val REWARDS_TABLE_NAME = "REWARDS"
+
     const val ID = "ID"
     const val USERNAME = "USERNAME"
     const val PASSWORD = "PASSWORD"
@@ -15,10 +17,18 @@ object Constants {
     const val SEX = "SEX"
     const val BLOODTYPE = "BLOODTYPE"
 
-    const val POINTS = "POINTS"
+
     const val STEPITUP = "STEPITUP"
     const val BALLBALANCE = "BALLBALANCE"
     const val ACTIVITYDATE = "ACTIVITYDATE"
+
+
+    const val POINTS = "POINTS"
+
+    const val VOUCHERVALUE = "VOUCHERVALUE"
+    const val DATEOFREDEMPTION = "DATEOFREDEMPTION"
+
+
 
     //Create Users Table Query
     const val CREATE_USER_TABLE = ("CREATE TABLE " + USER_TABLE_NAME + "(" +
@@ -37,22 +47,41 @@ object Constants {
             ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             USERNAME + " TEXT, " +
             ACTIVITYDATE + " TEXT, " +
-            POINTS + " INTEGER, " +
             STEPITUP + " INTEGER, " +
             BALLBALANCE + " INTEGER  "
             + "); ")
 
-    //Pre Populate DB
+    //Create Points Table Query
+    const val CREATE_POINTS_TABLE = ("CREATE TABLE " + POINTS_TABLE_NAME + "(" +
+            ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            USERNAME + " TEXT, " +
+            POINTS + " INTEGER "
+            + "); ")
+
+
+    //Create Rewards Table Query
+    const val CREATE_REWARDS_TABLE = ("CREATE TABLE " + REWARDS_TABLE_NAME + "(" +
+            ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            USERNAME + " TEXT, " +
+            VOUCHERVALUE + " INTEGER, "+
+            DATEOFREDEMPTION + " TEXT "
+            + "); ")
+
+    //Pre Populate User Table
     const val INSERT_USER_DATA = ("INSERT INTO "+ USER_TABLE_NAME +
             "( "+ USERNAME +", "+ PASSWORD +", " +
             FIRSTNAME+", "+ LASTNAME+", "+
             DOB+", "+ SEX+", "+ BLOODTYPE +
             " ) VALUES ('admin', 'admin','Jacky','Teo','10/1/2002','Male', 'O+'); ")
 
-    //Pre Populate DB
+    //Pre Populate Activity Table
     const val INSERT_ACTIVITY_DATA = ("INSERT INTO "+ ACTIVITY_TABLE_NAME +
-            "( "+USERNAME+", "+ ACTIVITYDATE +", " +
-            POINTS+", "+ STEPITUP +", "+
+            "( "+USERNAME+", "+ ACTIVITYDATE +", " + STEPITUP +", "+
             BALLBALANCE +
-            " ) VALUES ('admin', '28/2/2022',0 , 0 ,0); ")
+            " ) VALUES ('admin', '28/2/2022',0 ,0); ")
+
+    //Pre Populate Activity Table
+    const val INSERT_POINT_DATA = ("INSERT INTO "+ POINTS_TABLE_NAME +
+            "( "+USERNAME+", " + POINTS +
+            " ) VALUES ('admin',0); ")
 }

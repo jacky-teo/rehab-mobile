@@ -12,13 +12,18 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
     override fun onCreate(db: SQLiteDatabase?) {
         db!!.execSQL(Constants.CREATE_USER_TABLE)
         db!!.execSQL(Constants.CREATE_ACTIVITY_TABLE)
+        db!!.execSQL(Constants.CREATE_POINTS_TABLE)
+        db!!.execSQL(Constants.CREATE_REWARDS_TABLE)
         db!!.execSQL(Constants.INSERT_USER_DATA)
         db!!.execSQL(Constants.INSERT_ACTIVITY_DATA)
+        db!!.execSQL(Constants.INSERT_POINT_DATA)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db!!.execSQL("DROP TABLE IF EXISTS" + Constants.USER_TABLE_NAME)
         db!!.execSQL("DROP TABLE IF EXISTS" + Constants.ACTIVITY_TABLE_NAME)
+        db!!.execSQL("DROP TABLE IF EXISTS" + Constants.POINTS_TABLE_NAME)
+        db!!.execSQL("DROP TABLE IF EXISTS" + Constants.REWARDS_TABLE_NAME)
         onCreate(db)
     }
 
@@ -96,18 +101,12 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
     }
 
     // Create Activity Info
-    fun insertActivity (
-        username: String?,
-        activitydate: String?,
-        points: Int?,
-        stepitup: Int?,
-        ballbalance: Int?,
+    fun insertActivity (username: String?, activitydate: String?, stepitup: Int?, ballbalance: Int?,
     ): Long {
         val db = this.writableDatabase
         val values = ContentValues()
         values.put(Constants.USERNAME, username)
         values.put(Constants.ACTIVITYDATE, activitydate)
-        values.put(Constants.POINTS, points)
         values.put(Constants.STEPITUP, stepitup)
         values.put(Constants.BALLBALANCE, ballbalance)
         val id = db.insert(Constants.ACTIVITY_TABLE_NAME, null, values)
@@ -116,18 +115,12 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
     }
 
     // Update Activity Info
-    fun updateActivityRecords(
-        activityName: String,
-        activitydate: String,
-        username: String,
-        points: Int,
-        activityValue: Int
+    fun updateActivityRecords(activityName: String, activitydate: String, username: String, activityValue: Int
     ): Int {
         val db = this.writableDatabase
         val values = ContentValues()
         val condition = "${Constants.USERNAME}= '$username' AND ${Constants.ACTIVITYDATE} LIKE '$activitydate' "
         values.put(activityName, activityValue)
-        values.put(Constants.POINTS, points)
         val id = db.update(Constants.ACTIVITY_TABLE_NAME, values, condition, null)
         db.close()
         return id
@@ -146,7 +139,6 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
                     cursor.getInt(cursor.getColumnIndexOrThrow(Constants.ID)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.USERNAME)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.ACTIVITYDATE)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.POINTS)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(Constants.STEPITUP)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(Constants.BALLBALANCE))
                 )
@@ -169,7 +161,6 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
                     cursor.getInt(cursor.getColumnIndexOrThrow(Constants.ID)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.USERNAME)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.ACTIVITYDATE)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.POINTS)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(Constants.STEPITUP)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(Constants.BALLBALANCE))
                 )
@@ -192,7 +183,6 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
                     cursor.getInt(cursor.getColumnIndexOrThrow(Constants.ID)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.USERNAME)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.ACTIVITYDATE)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.POINTS)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(Constants.STEPITUP)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(Constants.BALLBALANCE))
                 )
@@ -203,4 +193,98 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
         return recordList
     }
 
+
+    // Read All User Info
+    fun getAllUserPoints():ArrayList<PointsModelRecord>{
+        val recordList = ArrayList<PointsModelRecord>()
+        val selectQuery = "SELECT * FROM ${Constants.POINTS_TABLE_NAME}"
+        val db = this.writableDatabase
+        val cursor =db.rawQuery(selectQuery,null)
+        if(cursor.moveToNext()){
+            do{
+                val pointsModelRecord = PointsModelRecord(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.USERNAME)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.POINTS)),
+                )
+                recordList.add(pointsModelRecord)
+            }while(cursor.moveToNext())
+        }
+        db.close()
+        return recordList
+    }
+
+    fun searchUserPoint(username: String): ArrayList<PointsModelRecord>{
+        val recordList = ArrayList<PointsModelRecord>()
+        val selectQuery = "SELECT * FROM ${Constants.POINTS_TABLE_NAME} WHERE ${Constants.USERNAME} LIKE '$username'"
+        val db = this.writableDatabase
+        val cursor =db.rawQuery(selectQuery,null)
+        if(cursor.moveToNext()){
+            do{
+                val pointsModelRecord = PointsModelRecord(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.USERNAME)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.POINTS)),
+                )
+                recordList.add(pointsModelRecord)
+            }while(cursor.moveToNext())
+        }
+        db.close()
+        return recordList
+    }
+
+    // Create User Point
+    fun insertPoint (username: String?, points: Int?): Long {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(Constants.USERNAME, username)
+        values.put(Constants.POINTS, points)
+        val id = db.insert(Constants.POINTS_TABLE_NAME, null, values)
+        db.close()
+        return id
+    }
+
+    //Update User Point
+    fun updateUserPoint(username: String, points: Int
+    ): Int {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        val condition = "${Constants.USERNAME}= '$username'"
+        values.put(Constants.POINTS, points)
+        val id = db.update(Constants.POINTS_TABLE_NAME, values, condition, null)
+        db.close()
+        return id
+    }
+
+    //Create new redemption
+    fun insertRedemption (username: String?, vouchervalue: Int?,dateofredemption: String?): Long {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(Constants.USERNAME, username)
+        values.put(Constants.VOUCHERVALUE, vouchervalue)
+        values.put(Constants.DATEOFREDEMPTION, dateofredemption)
+        val id = db.insert(Constants.REWARDS_TABLE_NAME, null, values)
+        db.close()
+        return id
+    }
+
+    fun searchUserReward(username: String): ArrayList<RewardModelRecord>{
+        val recordList = ArrayList<RewardModelRecord>()
+        val selectQuery = "SELECT * FROM ${Constants.REWARDS_TABLE_NAME} WHERE ${Constants.USERNAME} LIKE '$username'"
+        val db = this.writableDatabase
+        val cursor =db.rawQuery(selectQuery,null)
+        if(cursor.moveToNext()){
+            do{
+                val rewardModelRecord = RewardModelRecord(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.USERNAME)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.VOUCHERVALUE)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.DATEOFREDEMPTION))
+                )
+                recordList.add(rewardModelRecord)
+            }while(cursor.moveToNext())
+        }
+        db.close()
+        return recordList
+    }
 }

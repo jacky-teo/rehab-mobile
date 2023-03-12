@@ -78,11 +78,24 @@ class BallActivity : AppCompatActivity(), SensorEventListener {
         val seconds = (elapsedTime / 1000) % 60
 
         //Save to DB
-        val formatter = SimpleDateFormat("dd-MM-yyyy")
+        val formatter = SimpleDateFormat("yyyy-MM-dd")
         val date = Date()
         val currentDate = formatter.format(date).toString()
         val points = ((minutes * 80) + (seconds * 1))*(sensitivity/15)
-        dbHelper.insertActivity(username!!,currentDate,points.toInt(),0,elapsedTime.toInt())
+        dbHelper.insertActivity(username!!,currentDate,0,elapsedTime.toInt())
+
+        //Check if username has points entry
+        var userPoint = dbHelper.searchUserPoint(username!!)
+
+
+        if(userPoint.isEmpty()){
+            dbHelper.insertPoint(username!!,points.toInt())
+        }
+        else{
+            val currentPoint = dbHelper.searchUserPoint(username!!)[0].points
+            val newpoints = currentPoint + points.toInt()
+            dbHelper.updateUserPoint(username!!,newpoints)
+        }
 
         //Setting up pop up
         val builder = AlertDialog.Builder(this)

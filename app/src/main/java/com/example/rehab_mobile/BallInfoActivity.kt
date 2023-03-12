@@ -81,7 +81,7 @@ class BallInfoActivity : AppCompatActivity() {
         val userDataList = ArrayList<String>()
         for(data in userActivities){
             if (data.stepitup == 0 ){
-                val dataString = "Date: "+ data.activtydate + " \n" + "Score: "+ data.ballbalance.toString()+ " \n"+ "Points: "+ data.points.toString() + "\n-------------"
+                val dataString = "Date: "+ data.activtydate + " \n" + "Score: "+ data.ballbalance.toString()+ "\n-------------"
                 userDataList.add(dataString)
             }
         }

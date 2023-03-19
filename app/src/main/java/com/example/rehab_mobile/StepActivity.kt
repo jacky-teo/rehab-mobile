@@ -166,17 +166,14 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
             if(dbHelper.searchUserPoint(username!!).isEmpty()){
                 dbHelper.insertPoint(username!!,0)
             }
-//            if(dbHelper.searchActivityRecords(username!!,formattedDate).isEmpty()){
-//                // Create entry for today along with the points
-//                dbHelper.insertActivity(username!!,formattedDate,100,0)
-//            }
+//
 
                 //Update db
-                val currentData = dbHelper.searchActivityRecords(username!!,formattedDate)[0]
+                val currentData = dbHelper.searchStepActivityRecords(username!!,formattedDate)[0]
                 val currentUserPoints = dbHelper.searchUserPoint(username!!)[0]
                 val newPoints = currentUserPoints.points + 100
                 val newStepValue = currentData.stepitup + step
-                dbHelper.updateActivityRecords(Constants.STEPITUP,formattedDate,username!!,newStepValue)
+                dbHelper.updateStepActivityRecords(formattedDate,username!!,newStepValue)
                 dbHelper.updateUserPoint(username!!,newPoints)
 
 //            resetSteps()
@@ -201,7 +198,7 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
         val bottomSheetDialog = BottomSheetDialog(this)
         bottomSheetDialog.setContentView(R.layout.bottom_sheet)
         val listView = bottomSheetDialog.findViewById<ListView>(R.id.activityInfoListView)
-        val userActivities = dbHelper.searchUserActivityRecords(username!!)
+        val userActivities = dbHelper.searchStepUserActivityRecords(username!!)
         val userDataList = ArrayList<String>()
         for(data in userActivities){
             val dataString = "Date: "+ data.activtydate + " \n" + "Step It Up (no.of Steps): "+ data.stepitup.toString()+ "\n-------------"

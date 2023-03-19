@@ -77,10 +77,10 @@ class BallInfoActivity : AppCompatActivity() {
         val bottomSheetDialog = BottomSheetDialog(this)
         bottomSheetDialog.setContentView(R.layout.bottom_sheet)
         val listView = bottomSheetDialog.findViewById<ListView>(R.id.activityInfoListView)
-        val userActivities = dbHelper.searchUserActivityRecords(username!!)
+        val userActivities = dbHelper.searchBallUserActivityRecords(username!!)
         val userDataList = ArrayList<String>()
         for(data in userActivities){
-            if (data.stepitup == 0 ){
+            if (data.ballbalance == 0 ){
                 val dataString = "Date: "+ data.activtydate + " \n" + "Score: "+ data.ballbalance.toString()+ "\n-------------"
                 userDataList.add(dataString)
             }

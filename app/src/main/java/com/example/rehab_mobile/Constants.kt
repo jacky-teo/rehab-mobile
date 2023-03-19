@@ -4,7 +4,8 @@ object Constants {
     const val DB_NAME = "REHAB"
     const val DB_VERSION = 1
     const val USER_TABLE_NAME = "USERS"
-    const val ACTIVITY_TABLE_NAME = "ACTIVITIES"
+    const val STEP_ACTIVITY_TABLE_NAME = "STEP_ACTIVITY"
+    const val BALL_ACTIVITY_TABLE_NAME = "BALL_ACTIVITY"
     const val POINTS_TABLE_NAME = "POINTS"
     const val REWARDS_TABLE_NAME = "REWARDS"
 
@@ -42,13 +43,20 @@ object Constants {
             BLOODTYPE + " TEXT "
             + "); ")
 
-    //Create Activity Table Query
-    const val CREATE_ACTIVITY_TABLE = ("CREATE TABLE " + ACTIVITY_TABLE_NAME + "(" +
+    //Create Step Activity Table Query
+    const val CREATE_STEP_ACTIVITY_TABLE = ("CREATE TABLE " + STEP_ACTIVITY_TABLE_NAME + "(" +
             ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             USERNAME + " TEXT, " +
             ACTIVITYDATE + " TEXT, " +
-            STEPITUP + " INTEGER, " +
-            BALLBALANCE + " INTEGER  "
+            STEPITUP + " INTEGER "
+            + "); ")
+
+    //Create Ball Activity Table Query
+    const val CREATE_BALL_ACTIVITY_TABLE = ("CREATE TABLE " + BALL_ACTIVITY_TABLE_NAME + "(" +
+            ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+            USERNAME + " TEXT, " +
+            ACTIVITYDATE + " TEXT, " +
+            BALLBALANCE + " INTEGER "
             + "); ")
 
     //Create Points Table Query
@@ -74,11 +82,15 @@ object Constants {
             DOB+", "+ SEX+", "+ BLOODTYPE +
             " ) VALUES ('admin', 'admin','Jacky','Teo','10/1/2002','Male', 'O+'); ")
 
-    //Pre Populate Activity Table
-    const val INSERT_ACTIVITY_DATA = ("INSERT INTO "+ ACTIVITY_TABLE_NAME +
-            "( "+USERNAME+", "+ ACTIVITYDATE +", " + STEPITUP +", "+
-            BALLBALANCE +
-            " ) VALUES ('admin', '28/2/2022',0 ,0); ")
+    //Pre Populate STEP Activity Table
+    const val INSERT_STEP_ACTIVITY_DATA = ("INSERT INTO "+ STEP_ACTIVITY_TABLE_NAME +
+            "( "+USERNAME+", "+ ACTIVITYDATE +", " + STEPITUP +
+            " ) VALUES ('admin', '28-2-2022',0); ")
+
+    //Pre Populate BALL Activity Table
+    const val INSERT_BALL_ACTIVITY_DATA = ("INSERT INTO "+ BALL_ACTIVITY_TABLE_NAME +
+            "( "+USERNAME+", "+ ACTIVITYDATE +", " + BALLBALANCE +
+            " ) VALUES ('admin', '28-2-2022',0); ")
 
     //Pre Populate Activity Table
     const val INSERT_POINT_DATA = ("INSERT INTO "+ POINTS_TABLE_NAME +

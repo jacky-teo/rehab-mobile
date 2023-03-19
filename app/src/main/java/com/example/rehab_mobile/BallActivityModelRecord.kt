@@ -1,10 +1,9 @@
 package com.example.rehab_mobile
 
-class ActivityModelRecord(
+class BallActivityModelRecord(
     var id: Int,
     var username: String,
     var activtydate: String,
-    var stepitup: Int,
-    var ballbalance: Int,
+    var ballbalance: Int
 ) {
 }

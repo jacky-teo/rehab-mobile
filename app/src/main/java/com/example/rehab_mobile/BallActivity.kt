@@ -85,7 +85,7 @@ class BallActivity : AppCompatActivity(), SensorEventListener {
         val formattedDate = dateFormat.format(currentDate)
         val points = ((minutes * 80) + (seconds * 1))*(sensitivity/15)
         //Update the current Record into DB
-        dbHelper.updateActivityRecords("BALLBALANCE",formattedDate,username!!,elapsedTime.toInt())
+        dbHelper.updateBallActivityRecords(formattedDate,username!!,elapsedTime.toInt())
 //        dbHelper.insertActivity(username!!,currentDate,0,elapsedTime.toInt())
 
         //Check if username has points entry

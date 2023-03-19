@@ -11,17 +11,20 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
     Constants.DB_VERSION) {
     override fun onCreate(db: SQLiteDatabase?) {
         db!!.execSQL(Constants.CREATE_USER_TABLE)
-        db!!.execSQL(Constants.CREATE_ACTIVITY_TABLE)
+        db!!.execSQL(Constants.CREATE_STEP_ACTIVITY_TABLE)
+        db!!.execSQL(Constants.CREATE_BALL_ACTIVITY_TABLE)
         db!!.execSQL(Constants.CREATE_POINTS_TABLE)
         db!!.execSQL(Constants.CREATE_REWARDS_TABLE)
         db!!.execSQL(Constants.INSERT_USER_DATA)
-        db!!.execSQL(Constants.INSERT_ACTIVITY_DATA)
+        db!!.execSQL(Constants.INSERT_STEP_ACTIVITY_DATA)
+        db!!.execSQL(Constants.INSERT_BALL_ACTIVITY_DATA)
         db!!.execSQL(Constants.INSERT_POINT_DATA)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db!!.execSQL("DROP TABLE IF EXISTS" + Constants.USER_TABLE_NAME)
-        db!!.execSQL("DROP TABLE IF EXISTS" + Constants.ACTIVITY_TABLE_NAME)
+        db!!.execSQL("DROP TABLE IF EXISTS" + Constants.STEP_ACTIVITY_TABLE_NAME)
+        db!!.execSQL("DROP TABLE IF EXISTS" + Constants.BALL_ACTIVITY_TABLE_NAME)
         db!!.execSQL("DROP TABLE IF EXISTS" + Constants.POINTS_TABLE_NAME)
         db!!.execSQL("DROP TABLE IF EXISTS" + Constants.REWARDS_TABLE_NAME)
         onCreate(db)
@@ -101,92 +104,173 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
     }
 
     // Create Activity Info
-    fun insertActivity (username: String?, activitydate: String?, stepitup: Int?, ballbalance: Int?,
+    fun insertStepActivity (username: String?, activitydate: String?, stepitup: Int?
     ): Long {
         val db = this.writableDatabase
         val values = ContentValues()
         values.put(Constants.USERNAME, username)
         values.put(Constants.ACTIVITYDATE, activitydate)
         values.put(Constants.STEPITUP, stepitup)
-        values.put(Constants.BALLBALANCE, ballbalance)
-        val id = db.insert(Constants.ACTIVITY_TABLE_NAME, null, values)
+        val id = db.insert(Constants.STEP_ACTIVITY_TABLE_NAME, null, values)
         db.close()
         return id
     }
 
-    // Update Activity Info
-    fun updateActivityRecords(activityName: String, activitydate: String, username: String, activityValue: Int
+    fun insertBallActivity (username: String?, activitydate: String?, ballbalance: Int?,
+    ): Long {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(Constants.USERNAME, username)
+        values.put(Constants.ACTIVITYDATE, activitydate)
+        values.put(Constants.BALLBALANCE, ballbalance)
+        val id = db.insert(Constants.BALL_ACTIVITY_TABLE_NAME, null, values)
+        db.close()
+        return id
+    }
+
+    // Update step Activity Info
+    fun updateStepActivityRecords(activityDate: String, username: String, activityValue: Int
     ): Int {
         val db = this.writableDatabase
         val values = ContentValues()
-        val condition = "${Constants.USERNAME}= '$username' AND ${Constants.ACTIVITYDATE} LIKE '$activitydate' "
-        values.put(activityName, activityValue)
-        val id = db.update(Constants.ACTIVITY_TABLE_NAME, values, condition, null)
+        val condition = "${Constants.USERNAME}= '$username' AND ${Constants.ACTIVITYDATE} LIKE '$activityDate' "
+        values.put(Constants.STEPITUP,activityValue)
+        val id = db.update(Constants.STEP_ACTIVITY_TABLE_NAME, values, condition, null)
         db.close()
         return id
-
+    }
+    // Update ball Activity Info
+    fun updateBallActivityRecords(activityDate: String, username: String, activityValue: Int
+    ): Int {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        val condition = "${Constants.USERNAME}= '$username' AND ${Constants.ACTIVITYDATE} LIKE '$activityDate' "
+        values.put(Constants.STEPITUP,activityValue)
+        val id = db.update(Constants.STEP_ACTIVITY_TABLE_NAME, values, condition, null)
+        db.close()
+        return id
     }
 
-    // Read All Activity Info
-    fun getAllActivityRecords():ArrayList<ActivityModelRecord>{
-        val recordList = ArrayList<ActivityModelRecord>()
-        val selectQuery = "SELECT * FROM ${Constants.ACTIVITY_TABLE_NAME}"
+    // Read All Step Activity Info
+    fun getAllStepActivityRecords():ArrayList<StepActivityModelRecord>{
+        val recordList = ArrayList<StepActivityModelRecord>()
+        val selectQuery = "SELECT * FROM ${Constants.STEP_ACTIVITY_TABLE_NAME}"
         val db = this.writableDatabase
         val cursor =db.rawQuery(selectQuery,null)
         if(cursor.moveToNext()){
             do{
-                val activityModelRecord = ActivityModelRecord(
+                val stepActivityModelRecord = StepActivityModelRecord(
                     cursor.getInt(cursor.getColumnIndexOrThrow(Constants.ID)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.USERNAME)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.ACTIVITYDATE)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(Constants.STEPITUP)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.BALLBALANCE))
                 )
-                recordList.add(activityModelRecord)
+                recordList.add(stepActivityModelRecord)
             }while(cursor.moveToNext())
         }
         db.close()
         return recordList
     }
 
-    // Read Single User Activity Info
-    fun searchActivityRecords(username: String,activitydate: String): ArrayList<ActivityModelRecord>{
-        val recordList = ArrayList<ActivityModelRecord>()
-        val selectQuery = "SELECT * FROM ${Constants.ACTIVITY_TABLE_NAME} WHERE ${Constants.USERNAME} LIKE '$username' AND ${Constants.ACTIVITYDATE} LIKE '$activitydate'"
+    // Read All Ball Activity Info
+    fun getAllBallActivityRecords():ArrayList<BallActivityModelRecord>{
+        val recordList = ArrayList<BallActivityModelRecord>()
+        val selectQuery = "SELECT * FROM ${Constants.BALL_ACTIVITY_TABLE_NAME}"
         val db = this.writableDatabase
         val cursor =db.rawQuery(selectQuery,null)
         if(cursor.moveToNext()){
             do{
-                val activityModelRecord = ActivityModelRecord(
+                val ballActivityModelRecord = BallActivityModelRecord(
                     cursor.getInt(cursor.getColumnIndexOrThrow(Constants.ID)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.USERNAME)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.ACTIVITYDATE)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.STEPITUP)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.BALLBALANCE))
+                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.BALLBALANCE)),
                 )
-                recordList.add(activityModelRecord)
+                recordList.add(ballActivityModelRecord)
             }while(cursor.moveToNext())
         }
         db.close()
         return recordList
     }
 
-    // Read Single User Activity Info
-    fun searchUserActivityRecords(username: String): ArrayList<ActivityModelRecord>{
-        val recordList = ArrayList<ActivityModelRecord>()
-        val selectQuery = "SELECT * FROM ${Constants.ACTIVITY_TABLE_NAME} WHERE ${Constants.USERNAME} LIKE '$username'"
+    // Read Single Step Activity Info
+    fun searchStepActivityRecords(username: String,activitydate: String): ArrayList<StepActivityModelRecord>{
+        val recordList = ArrayList<StepActivityModelRecord>()
+        val selectQuery = "SELECT * FROM ${Constants.STEP_ACTIVITY_TABLE_NAME} WHERE ${Constants.USERNAME} LIKE '$username' AND ${Constants.ACTIVITYDATE} LIKE '$activitydate'"
         val db = this.writableDatabase
         val cursor =db.rawQuery(selectQuery,null)
         if(cursor.moveToNext()){
             do{
-                val activityModelRecord = ActivityModelRecord(
+                val stepActivityModelRecord = StepActivityModelRecord(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.USERNAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.ACTIVITYDATE)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.STEPITUP))
+                )
+                recordList.add(stepActivityModelRecord)
+            }while(cursor.moveToNext())
+        }
+        db.close()
+        return recordList
+    }
+
+    // Read Single Ball Activity Info
+    fun searchBallActivityRecords(username: String,activitydate: String): ArrayList<BallActivityModelRecord>{
+        val recordList = ArrayList<BallActivityModelRecord>()
+        val selectQuery = "SELECT * FROM ${Constants.BALL_ACTIVITY_TABLE_NAME} WHERE ${Constants.USERNAME} LIKE '$username' AND ${Constants.ACTIVITYDATE} LIKE '$activitydate'"
+        val db = this.writableDatabase
+        val cursor =db.rawQuery(selectQuery,null)
+        if(cursor.moveToNext()){
+            do{
+                val ballActivityModelRecord = BallActivityModelRecord(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.USERNAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.ACTIVITYDATE)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.BALLBALANCE))
+                )
+                recordList.add(ballActivityModelRecord)
+            }while(cursor.moveToNext())
+        }
+        db.close()
+        return recordList
+    }
+
+    // Read Single User Step Activity Info
+    fun searchStepUserActivityRecords(username: String): ArrayList<StepActivityModelRecord>{
+        val recordList = ArrayList<StepActivityModelRecord>()
+        val selectQuery = "SELECT * FROM ${Constants.STEP_ACTIVITY_TABLE_NAME} WHERE ${Constants.USERNAME} LIKE '$username'"
+        val db = this.writableDatabase
+        val cursor =db.rawQuery(selectQuery,null)
+        if(cursor.moveToNext()){
+            do{
+                val stepActivityModelRecord = StepActivityModelRecord(
                     cursor.getInt(cursor.getColumnIndexOrThrow(Constants.ID)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.USERNAME)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.ACTIVITYDATE)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(Constants.STEPITUP)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.BALLBALANCE))
                 )
-                recordList.add(activityModelRecord)
+                recordList.add(stepActivityModelRecord)
+            }while(cursor.moveToNext())
+        }
+        db.close()
+        return recordList
+    }
+
+    // Read Single User Ball Activity Info
+    fun searchBallUserActivityRecords(username: String): ArrayList<BallActivityModelRecord>{
+        val recordList = ArrayList<BallActivityModelRecord>()
+        val selectQuery = "SELECT * FROM ${Constants.BALL_ACTIVITY_TABLE_NAME} WHERE ${Constants.USERNAME} LIKE '$username'"
+        val db = this.writableDatabase
+        val cursor =db.rawQuery(selectQuery,null)
+        if(cursor.moveToNext()){
+            do{
+                val ballActivityModelRecord = BallActivityModelRecord(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.USERNAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.ACTIVITYDATE)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.BALLBALANCE)),
+                )
+                recordList.add(ballActivityModelRecord)
             }while(cursor.moveToNext())
         }
         db.close()

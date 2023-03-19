@@ -145,12 +145,7 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
             }
         }
     }
-//    private fun saveData(){
-//        val sharedPreferences = getSharedPreferences("steps",Context.MODE_PRIVATE)
-//        val editor = sharedPreferences.edit()
-//        editor.putFloat("currentstep",previousTotalSteps)
-//        editor.apply()
-//    }
+
     private fun loadData(){
         val sharedPreferences =getSharedPreferences("steps",Context.MODE_PRIVATE)
         val savedNumber: Float= sharedPreferences.getFloat("currentstep",0f)
@@ -158,15 +153,7 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
         var stepsTakenTv = findViewById<TextView>(R.id.stepsTaken)
         stepsTakenTv.text = savedNumber.toInt().toString()
     }
-//    private fun resetSteps(){
-//        var stepsTakenTv = findViewById<TextView>(R.id.stepsTaken)
-//        var cirbar = findViewById<CircularProgressBar>(R.id.progress_circular)
-//        totalSteps = 0f
-//        previousTotalSteps = totalSteps
-//        stepsTakenTv.text = 0.toString()
-//        cirbar.apply {setProgressWithAnimation(0f)  }
-//        saveData()
-//    }
+
     fun stepChecker(step: Int){
         if(step >= 100){
             Toast.makeText(this,"Congratulations you have completed the exercise", Toast.LENGTH_SHORT).show()
@@ -179,11 +166,11 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
             if(dbHelper.searchUserPoint(username!!).isEmpty()){
                 dbHelper.insertPoint(username!!,0)
             }
-            if(dbHelper.searchActivityRecords(username!!,formattedDate).isEmpty()){
-                // Create entry for today along with the points
-                dbHelper.insertActivity(username!!,formattedDate,100,0)
-            }
-            else{
+//            if(dbHelper.searchActivityRecords(username!!,formattedDate).isEmpty()){
+//                // Create entry for today along with the points
+//                dbHelper.insertActivity(username!!,formattedDate,100,0)
+//            }
+
                 //Update db
                 val currentData = dbHelper.searchActivityRecords(username!!,formattedDate)[0]
                 val currentUserPoints = dbHelper.searchUserPoint(username!!)[0]
@@ -191,7 +178,7 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
                 val newStepValue = currentData.stepitup + step
                 dbHelper.updateActivityRecords(Constants.STEPITUP,formattedDate,username!!,newStepValue)
                 dbHelper.updateUserPoint(username!!,newPoints)
-            }
+
 //            resetSteps()
         }
     }
@@ -223,10 +210,15 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
         myAdapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,userDataList)
         listView?.adapter = myAdapter
         bottomSheetDialog.show()
-        bottomLayout.findViewById<Button>(R.id.btn_close).setOnClickListener {
-            bottomSheetDialog.dismiss()
-        }
+//        bottomLayout.findViewById<Button>(R.id.btn_close).setOnClickListener {
+//            bottomSheetDialog.dismiss()
+//        }
     }
+//    fun closeStatistics(view: View){
+//        val bottomSheetDialog = BottomSheetDialog(this)
+//        bottomSheetDialog.setContentView(R.layout.bottom_sheet)
+//        bottomSheetDialog.dismiss()
+//    }
 
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
 

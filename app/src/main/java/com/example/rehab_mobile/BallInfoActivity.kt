@@ -88,8 +88,8 @@ class BallInfoActivity : AppCompatActivity() {
         myAdapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,userDataList)
         listView?.adapter = myAdapter
         bottomSheetDialog.show()
-        bottomLayout.findViewById<Button>(R.id.btn_close).setOnClickListener {
-            bottomSheetDialog.dismiss()
-        }
+//        bottomLayout.findViewById<Button>(R.id.btn_close).setOnClickListener {
+//            bottomSheetDialog.dismiss()
+//        }
     }
 }

@@ -63,15 +63,15 @@ class HomeActivity : AppCompatActivity() {
 
 
     // Produces the Bottom Sheet containing User Settings
-    fun viewAccountBtnClick(view: View) {
-        val bottomSheetDialog = BottomSheetDialog(this)
-        val bottomView = layoutInflater.inflate(R.layout.bottom_sheet, null)
-        bottomSheetDialog.setContentView(bottomView)
-        bottomSheetDialog.show()
-        bottomView.findViewById<Button>(R.id.btn_close).setOnClickListener {
-            bottomSheetDialog.dismiss()
-        }
-    }
+//    fun viewAccountBtnClick(view: View) {
+//        val bottomSheetDialog = BottomSheetDialog(this)
+//        val bottomView = layoutInflater.inflate(R.layout.bottom_sheet, null)
+//        bottomSheetDialog.setContentView(bottomView)
+//        bottomSheetDialog.show()
+//        bottomView.findViewById<Button>(R.id.btn_close).setOnClickListener {
+//            bottomSheetDialog.dismiss()
+//        }
+//    }
 
     // Logout button present in the Bottom Sheet
     fun logoutBtnClick(view: View) {

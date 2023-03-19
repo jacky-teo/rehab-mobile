@@ -23,7 +23,8 @@ import androidx.core.view.get
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 import java.text.SimpleDateFormat
-import java.util.Date
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.sqrt
 
 class StepActivity : AppCompatActivity(), SensorEventListener {
@@ -169,24 +170,26 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
     fun stepChecker(step: Int){
         if(step >= 100){
             Toast.makeText(this,"Congratulations you have completed the exercise", Toast.LENGTH_SHORT).show()
-            val formatter = SimpleDateFormat("yyyy-MM-dd")
-            val date = Date()
-            val currentDate = formatter.format(date).toString()
+            val calendar = Calendar.getInstance()
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+            val currentDate = calendar.time
+            val formattedDate = dateFormat.format(currentDate)
+
             // Find if entry exist. If does exist for this user and today, update it to db else
             if(dbHelper.searchUserPoint(username!!).isEmpty()){
                 dbHelper.insertPoint(username!!,0)
             }
-            if(dbHelper.searchActivityRecords(username!!,currentDate).isEmpty()){
+            if(dbHelper.searchActivityRecords(username!!,formattedDate).isEmpty()){
                 // Create entry for today along with the points
-                dbHelper.insertActivity(username!!,currentDate,100,0)
+                dbHelper.insertActivity(username!!,formattedDate,100,0)
             }
             else{
                 //Update db
-                val currentData = dbHelper.searchActivityRecords(username!!,currentDate)[0]
+                val currentData = dbHelper.searchActivityRecords(username!!,formattedDate)[0]
                 val currentUserPoints = dbHelper.searchUserPoint(username!!)[0]
                 val newPoints = currentUserPoints.points + 100
                 val newStepValue = currentData.stepitup + step
-                dbHelper.updateActivityRecords(Constants.STEPITUP,currentDate,username!!,newStepValue)
+                dbHelper.updateActivityRecords(Constants.STEPITUP,formattedDate,username!!,newStepValue)
                 dbHelper.updateUserPoint(username!!,newPoints)
             }
 //            resetSteps()

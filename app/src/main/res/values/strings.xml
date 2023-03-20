@@ -34,4 +34,15 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string-array name="sex">
+        <item>Female</item>
+        <item>Male</item>
+        <item>Others</item>
+    </string-array>
+    <string-array name="bloodType">
+        <item>O</item>
+        <item>A</item>
+        <item>B</item>
+        <item>AB</item>
+    </string-array>
 </resources>

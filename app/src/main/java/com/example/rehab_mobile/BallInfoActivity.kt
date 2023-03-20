@@ -80,10 +80,8 @@ class BallInfoActivity : AppCompatActivity() {
         val userActivities = dbHelper.searchBallUserActivityRecords(username!!)
         val userDataList = ArrayList<String>()
         for(data in userActivities){
-            if (data.ballbalance == 0 ){
-                val dataString = "Date: "+ data.activtydate + " \n" + "Score: "+ data.ballbalance.toString()+ "\n-------------"
-                userDataList.add(dataString)
-            }
+            val dataString = "Date: "+ data.activtydate + " \n" + "Score: "+ data.ballbalance.toString()+ "\n-------------"
+            userDataList.add(dataString)
         }
         myAdapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,userDataList)
         listView?.adapter = myAdapter

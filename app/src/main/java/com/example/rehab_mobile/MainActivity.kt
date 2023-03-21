@@ -79,6 +79,8 @@ class MainActivity : AppCompatActivity() {
 
     fun registerBtnClick(view: View) {
         //TODO CREATE REGISTER PAGE
+        val registrationIntent = Intent(this, RegistrationActivity::class.java)
+        startActivity(registrationIntent)
     }
 //        val username = usernameEt.text.toString()
 //        val password = passwordEt.text.toString()

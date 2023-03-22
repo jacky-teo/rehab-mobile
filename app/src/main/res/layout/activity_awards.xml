@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".AwardsActivity"
-    android:paddingTop="40dp">
+    android:paddingTop="40dp"
+    android:id="@+id/awardsLayout">
 
     <TextView
         android:id="@+id/textView"

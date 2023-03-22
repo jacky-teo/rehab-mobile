@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -23,17 +24,12 @@ import kotlin.collections.ArrayList
 class AwardsActivity : AppCompatActivity() {
 
     private var username: String? = ""
-    private var awardsRedeemed = ArrayList<RewardModelRecord>()
 
     // voucher value and points
     val voucherPoints = mapOf("v5" to 600, "v10" to 1000, "v15" to 1400)
 
-    //initiate binding variable
-    private lateinit var binding : ActivityAwardsBinding
     // db helper
     private lateinit var dbHelper: DatabaseHelper
-    // redemption history
-    private lateinit var myAdapter: ArrayAdapter<RewardModelRecord>
 
     private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
@@ -43,7 +39,6 @@ class AwardsActivity : AppCompatActivity() {
 
         // set available as default active button tab
         updateTabStyle(findViewById<Button>(R.id.availableBtn))
-
 
     }
 
@@ -97,17 +92,6 @@ class AwardsActivity : AppCompatActivity() {
         replaceFragment(redeemedAwards())
         updateTabStyle(view)
 
-        // load redeem rewards
-        loadRedeemedRewards()
-
-        //display history or message
-        if (awardsRedeemed.size > 0) {
-            myAdapter = ArrayAdapter<RewardModelRecord>(this, android.R.layout.simple_list_item_1, awardsRedeemed)
-
-        } else {
-            val tv = findViewById<TextView>(R.id.redeemedMsg)
-            tv.isVisible = false
-        }
     }
 
     // get user points
@@ -119,17 +103,12 @@ class AwardsActivity : AppCompatActivity() {
         pointsView.text = availPoints.toString()
     }
 
-    // load history of voucher redemption
-    private fun loadRedeemedRewards(){
-        awardsRedeemed = dbHelper.searchUserReward(username!!)
-        Log.i("hi", awardsRedeemed.toString())
-    }
 
     // deduct points for redemption and add redemption record
     private fun redeemNew(voucherValue: String) {
         // get and format current time and date
         val currentDateTime = Calendar.getInstance().time
-        val dateFormat = SimpleDateFormat("dd.LLLL.yyyy HH:mm:ss aaa z")
+        val dateFormat = SimpleDateFormat("EEEE.dd.LLLL.yyyy HH:mm:ss aaa z")
         val todayDateFormatted = dateFormat.format(currentDateTime)
 
         // update user points after voucher redemption
@@ -154,19 +133,4 @@ class AwardsActivity : AppCompatActivity() {
 
     }
 
-    // attach adapter to redeem history
-    private fun attachAdapterLV() {
-        // declare adapter
-        // ArrayAdapter<String>(activity, layout, array)
-//        myAdapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayName)
-//
-//        // declare ListView by id
-//        val lv = findViewById<ListView>(R.id.uniqueID)
-//
-//        // attach adapter to ListView
-//        lv.adapter = myAdapter
-//
-//        // notify adapter to refresh data set connected
-//        myAdapter.notifyDataSetChanged()
-    }
 }

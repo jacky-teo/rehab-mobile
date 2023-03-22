@@ -84,8 +84,7 @@
                 <TextView
                     android:id="@+id/stepSummary"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="placeholder" />
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
             <LinearLayout
@@ -102,8 +101,7 @@
                 <TextView
                     android:id="@+id/ballSummary"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="placeholder" />
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -157,7 +155,6 @@
                 android:id="@+id/todayBallGame"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="56s"
                 android:textSize="28dp" />
         </LinearLayout>
 
@@ -201,7 +198,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="56s"
                 android:textSize="28dp"
                 android:id="@+id/todayStepGame"/>
         </LinearLayout>

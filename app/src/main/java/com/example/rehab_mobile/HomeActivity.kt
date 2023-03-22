@@ -16,14 +16,6 @@ class HomeActivity : AppCompatActivity() {
     //initiate binding variable
     private lateinit var binding : ActivityHomeBinding
 
-    // receive back intent from awards activity
-    private val getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-    {
-        if (it.resultCode == RESULT_OK) {
-            replaceFragment(User())
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        val formatter = SimpleDateFormat("dd-MM-yyyy")

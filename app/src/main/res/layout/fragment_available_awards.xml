@@ -1,13 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".availableAwards">
+    android:layout_height="wrap_content"
+    tools:context=".availableAwards"
+    android:id="@+id/vouchersList"
+    android:orientation="vertical"
+    android:padding="8dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="available!" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:background="@drawable/rounded_corners"
+            android:padding="8dp"
+            android:layout_marginVertical="5dp"
+            android:onClick="requestVoucherRedemption"
+            android:tag="v15">
 
-</FrameLayout>
+
+            <ImageView
+                android:id="@+id/brandIcon1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/fairprice"
+                android:layout_alignParentLeft="true"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
+
+            <TextView
+                android:id="@+id/price1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/points1"
+                android:layout_toRightOf="@id/brandIcon1"
+                android:text="@string/voucher15"
+                android:textColor="@color/ocean"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/points1"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/price1"
+                android:text="Voucher"
+                android:textColor="@color/ocean"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/points1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@id/brandIcon1"
+                android:text="600 Points"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/ocean"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:background="@drawable/rounded_corners"
+            android:padding="8dp"
+            android:layout_marginVertical="5dp"
+            android:onClick="requestVoucherRedemption"
+            android:tag="v10">
+
+
+            <ImageView
+                android:id="@+id/brandIcon2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/fairprice"
+                android:layout_alignParentLeft="true"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
+
+            <TextView
+                android:id="@+id/price2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/points2"
+                android:layout_toRightOf="@id/brandIcon2"
+                android:text="@string/voucher10"
+                android:textColor="@color/ocean"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/points2"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/price2"
+                android:text="Voucher"
+                android:textColor="@color/ocean"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/points2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@id/brandIcon2"
+                android:text="1000 Points"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/ocean"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:background="@drawable/rounded_corners"
+            android:padding="8dp"
+            android:layout_marginVertical="5dp"
+            android:onClick="requestVoucherRedemption"
+            android:tag="v5">
+
+
+            <ImageView
+                android:id="@+id/brandIcon3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/fairprice"
+                android:layout_alignParentLeft="true"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
+
+            <TextView
+                android:id="@+id/price3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/points3"
+                android:layout_toRightOf="@id/brandIcon3"
+                android:text="@string/voucher5"
+                android:textColor="@color/ocean"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/title3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/points3"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/price3"
+                android:text="Voucher"
+                android:textColor="@color/ocean"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/points3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@id/brandIcon3"
+                android:text="1400 Points"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/ocean"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+</LinearLayout>

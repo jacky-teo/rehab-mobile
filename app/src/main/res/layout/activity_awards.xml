@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".AwardsActivity">
-
-    <Button
-        android:id="@+id/backBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back"
-        android:onClick="returnToPrev"/>
+    tools:context=".AwardsActivity"
+    android:paddingTop="40dp">
 
     <TextView
         android:id="@+id/textView"
@@ -22,17 +15,19 @@
         android:text="@string/pointsHeading"
         android:textAlignment="center"
         android:textColor="@color/ocean"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:fontFamily="@font/poppins"/>
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/availablePoints"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="[Points]"
         android:textAlignment="center"
         android:textColor="@color/ocean"
         android:textSize="38sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:fontFamily="@font/poppins"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,24 +42,26 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/pill_shape"
+            android:background="@drawable/inactive_tab_btns"
             android:text="@string/availableButton"
-            android:textColor="@color/lightBrown"
+            android:textColor="@color/darkGray"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:onClick="showAvailable"/>
+            android:onClick="showAvailable"
+            android:fontFamily="@font/poppins"/>
 
         <Button
             android:id="@+id/redeemedBtn"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/pill_shape"
+            android:background="@drawable/inactive_tab_btns"
             android:text="@string/redeemedButton"
-            android:textColor="@color/lightBrown"
+            android:textColor="@color/darkGray"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:onClick="showRedeemed"/>
+            android:onClick="showRedeemed"
+            android:fontFamily="@font/poppins"/>
 
     </LinearLayout>
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".availableAwards"
+    tools:context=".AvailableAwards"
     android:id="@+id/vouchersList"
     android:orientation="vertical"
     android:padding="8dp">
@@ -12,7 +12,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:background="@drawable/rounded_corners"
+            android:background="@drawable/voucher_shape"
             android:padding="8dp"
             android:layout_marginVertical="5dp"
             android:onClick="requestVoucherRedemption"
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@id/brandIcon1"
-                android:text="600 Points"
+                android:text="1400 Points"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/ocean"
                 android:textSize="18sp" />
@@ -67,7 +67,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:background="@drawable/rounded_corners"
+            android:background="@drawable/voucher_shape"
             android:padding="8dp"
             android:layout_marginVertical="5dp"
             android:onClick="requestVoucherRedemption"
@@ -122,7 +122,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:background="@drawable/rounded_corners"
+            android:background="@drawable/voucher_shape"
             android:padding="8dp"
             android:layout_marginVertical="5dp"
             android:onClick="requestVoucherRedemption"
@@ -167,7 +167,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@id/brandIcon3"
-                android:text="1400 Points"
+                android:text="600 Points"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/ocean"
                 android:textSize="18sp" />

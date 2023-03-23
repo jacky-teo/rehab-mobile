@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.ListView
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import org.w3c.dom.Text
 
 class redeemedAwards : Fragment() {
     // db helper
@@ -63,7 +65,16 @@ class redeemedAwards : Fragment() {
     // load history of voucher redemption
     private fun loadRedeemedRewards(){
         recordsArrayList = dbHelper.searchUserReward(username!!)
-//        Log.i("hi", recordsArrayList.toString())
+        val msg = requireActivity()!!.findViewById<TextView>(R.id.redeemedMsg)
+
+        // hide message if redemption records not empty
+        if (recordsArrayList.size > 0){
+            recordsArrayList.reverse()
+            msg.visibility = View.GONE
+
+        } else {
+            msg.text = "No Vouchers Redeemed"
+        }
 
     }
 

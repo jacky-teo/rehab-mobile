@@ -1,15 +1,12 @@
 package com.example.rehab_mobile
 
 import android.os.Bundle
-import android.text.Layout
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 
-class availableAwards : Fragment() {
-    val act = activity
+class AvailableAwards : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

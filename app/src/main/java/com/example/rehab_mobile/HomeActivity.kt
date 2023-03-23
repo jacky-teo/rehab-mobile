@@ -100,8 +100,8 @@ class HomeActivity : AppCompatActivity() {
     // Go to awards activity
     fun viewAwards(view: View) {
         val intent = Intent(this, AwardsActivity::class.java)
-        val requestCode = 123
-        startActivityForResult(intent, requestCode)
+        startActivity(intent)
+        finish()
 
     }
 }

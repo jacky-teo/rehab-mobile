@@ -1,10 +1,14 @@
 package com.example.rehab_mobile
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class RecordsAdapter (private val arrayList: ArrayList<RewardModelRecord>) : RecyclerView.Adapter<RecordsAdapter.MyViewHolder>() {
 
@@ -13,10 +17,15 @@ class RecordsAdapter (private val arrayList: ArrayList<RewardModelRecord>) : Rec
         return MyViewHolder(itemView)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: RecordsAdapter.MyViewHolder, position: Int) {
         val item = arrayList[position]
-        holder.valueTv.text = item.vouchervalue.toString()
-        holder.timeTv.text = item.dateofredemption
+        holder.valueTv.text = "$" + item.vouchervalue.toString()
+
+        // format date and time displayed
+        val dateStrings = item.dateofredemption.split("\t")
+        holder.timeTv.text = dateStrings[0]
+//        holder.timeTv.text = dateStrings[0] + ", " + dateStrings[1]
     }
 
     override fun getItemCount(): Int {

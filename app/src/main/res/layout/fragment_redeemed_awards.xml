@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:paddingVertical="60dp"
-        android:text="No Vouchers Redeemed"
         android:textAlignment="center"/>
 
     <androidx.recyclerview.widget.RecyclerView

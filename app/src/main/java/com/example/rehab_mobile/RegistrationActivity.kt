@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,10 +20,14 @@ class RegistrationActivity : AppCompatActivity() {
     private lateinit var btnDatePicker :Button
     var sex:String = ""
     var bloodType:String = ""
+    private lateinit var user: FirebaseAuth
     private lateinit var dbHelper: DatabaseHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
+
+        // User Auth Instance
+        user = FirebaseAuth.getInstance()
 
         dbHelper = DatabaseHelper(this)
         btnDatePicker = findViewById(R.id.dob)
@@ -94,10 +99,28 @@ class RegistrationActivity : AppCompatActivity() {
         }else if (password == null) {
             Toast.makeText( this,"Please fill in your password", Toast.LENGTH_SHORT).show()
         }else {
-            dbHelper.insertUserInfo(username,password,firstName,lastName,dob,sex,bloodType)
-            val myIntent = Intent(this, MainActivity::class.java)
-            startActivity(myIntent)
-            Toast.makeText( this,"Successfully registered!", Toast.LENGTH_SHORT).show()
+
+            //Register into firebase
+            user.createUserWithEmailAndPassword(username,password).addOnCompleteListener(RegistrationActivity()){
+                task ->
+                if(task.isSuccessful){
+                    dbHelper.insertUserInfo(username,password,firstName,lastName,dob,sex,bloodType)
+                    val myIntent = Intent(this, MainActivity::class.java)
+                    startActivity(myIntent)
+                    Toast.makeText( this,"Successfully registered!", Toast.LENGTH_SHORT).show()
+
+                }
+                else
+                {
+                    Toast.makeText( this,task.exception!!.message, Toast.LENGTH_SHORT).show()
+                }
+
+            }
+
+//            dbHelper.insertUserInfo(username,password,firstName,lastName,dob,sex,bloodType)
+//            val myIntent = Intent(this, MainActivity::class.java)
+//            startActivity(myIntent)
+//            Toast.makeText( this,"Successfully registered!", Toast.LENGTH_SHORT).show()
         }
     }
 }

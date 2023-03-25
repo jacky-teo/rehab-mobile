@@ -64,7 +64,7 @@ class BallActivity : AppCompatActivity(), SensorEventListener {
             if (circle.x < (0 - circle.width) || circle.x > getScreenWidth(this)){
                 gameOver()
             }
-            if (circle.y < (0 - circle.width) || circle.y > (getScreenHeight(this) - 225)){
+            if (circle.y < (0 - circle.width) || circle.y > (getScreenHeight(this) - 300)){
                 gameOver()
             }
         }
@@ -83,7 +83,7 @@ class BallActivity : AppCompatActivity(), SensorEventListener {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd")
         val currentDate = calendar.time
         val formattedDate = dateFormat.format(currentDate)
-        val points = ((minutes * 80) + (seconds * 1))*(sensitivity/15)
+        val points = ((minutes * 120) + (seconds * 1))*(sensitivity/15)
         //Update the current Record into DB
 //        dbHelper.updateBallActivityRecords(formattedDate,username!!,elapsedTime.toInt())
         dbHelper.insertBallActivity(username!!,formattedDate, elapsedTime.toInt())
@@ -121,6 +121,7 @@ class BallActivity : AppCompatActivity(), SensorEventListener {
 
         //stop sensor
         sensorManager.unregisterListener(this)
+        timer?.cancel()
     }
     private fun setUpTimer(){
         val timerTv = findViewById<TextView>(R.id.timerTv)

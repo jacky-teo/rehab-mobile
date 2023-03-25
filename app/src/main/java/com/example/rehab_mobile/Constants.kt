@@ -11,7 +11,7 @@ object Constants {
 
     const val ID = "ID"
     const val USERNAME = "USERNAME"
-    const val PASSWORD = "PASSWORD"
+//    const val PASSWORD = "PASSWORD"
     const val FIRSTNAME = "FIRSTNAME"
     const val LASTNAME = "LASTNAME"
     const val DOB = "DOB"
@@ -35,7 +35,7 @@ object Constants {
     const val CREATE_USER_TABLE = ("CREATE TABLE " + USER_TABLE_NAME + "(" +
             ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             USERNAME + " TEXT, " +
-            PASSWORD + " TEXT, " +
+//            PASSWORD + " TEXT, " +
             FIRSTNAME + " TEXT, " +
             LASTNAME + " TEXT, " +
             DOB + " TEXT, " +
@@ -76,11 +76,16 @@ object Constants {
             + "); ")
 
     //Pre Populate User Table
+//    const val INSERT_USER_DATA = ("INSERT INTO "+ USER_TABLE_NAME +
+//            "( "+ USERNAME +", "+ PASSWORD +", " +
+//            FIRSTNAME+", "+ LASTNAME+", "+
+//            DOB+", "+ SEX+", "+ BLOODTYPE +
+//            " ) VALUES ('admin', 'admin','Jacky','Teo','10/1/2002','Male', 'O+'); ")
     const val INSERT_USER_DATA = ("INSERT INTO "+ USER_TABLE_NAME +
-            "( "+ USERNAME +", "+ PASSWORD +", " +
+            "( "+ USERNAME +", "+
             FIRSTNAME+", "+ LASTNAME+", "+
             DOB+", "+ SEX+", "+ BLOODTYPE +
-            " ) VALUES ('admin', 'admin','Jacky','Teo','10/1/2002','Male', 'O+'); ")
+            " ) VALUES ('admin','Jacky','Teo','10/1/2002','Male', 'O+'); ")
 
     //Pre Populate STEP Activity Table
     const val INSERT_STEP_ACTIVITY_DATA = ("INSERT INTO "+ STEP_ACTIVITY_TABLE_NAME +

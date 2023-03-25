@@ -104,11 +104,10 @@ class RegistrationActivity : AppCompatActivity() {
             user.createUserWithEmailAndPassword(username,password).addOnCompleteListener(RegistrationActivity()){
                 task ->
                 if(task.isSuccessful){
-                    dbHelper.insertUserInfo(username,password,firstName,lastName,dob,sex,bloodType)
+                    dbHelper.insertUserInfo(username,firstName,lastName,dob,sex,bloodType)
                     val myIntent = Intent(this, MainActivity::class.java)
                     startActivity(myIntent)
                     Toast.makeText( this,"Successfully registered!", Toast.LENGTH_SHORT).show()
-
                 }
                 else
                 {

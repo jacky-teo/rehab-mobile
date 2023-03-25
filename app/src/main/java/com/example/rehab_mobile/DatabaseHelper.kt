@@ -33,7 +33,7 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
     //Create User Info
     fun insertUserInfo(
         username: String?,
-        password: String?,
+//        password: String?,
         firstname: String?,
         lastname: String?,
         dob: String?,
@@ -43,7 +43,7 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
         val db = this.writableDatabase
         val values = ContentValues()
         values.put(Constants.USERNAME, username)
-        values.put(Constants.PASSWORD, password)
+//        values.put(Constants.PASSWORD, password)
         values.put(Constants.FIRSTNAME, firstname)
         values.put(Constants.LASTNAME, lastname)
         values.put(Constants.DOB, dob)
@@ -65,7 +65,7 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
                 val userModelRecord = UserModelRecord(
                     cursor.getInt(cursor.getColumnIndexOrThrow(Constants.ID)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.USERNAME)),
-                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.PASSWORD)),
+//                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.PASSWORD)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.FIRSTNAME)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.LASTNAME)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.DOB)),
@@ -89,7 +89,7 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
                 val userModelRecord = UserModelRecord(
                     cursor.getInt(cursor.getColumnIndexOrThrow(Constants.ID)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.USERNAME)),
-                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.PASSWORD)),
+//                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.PASSWORD)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.FIRSTNAME)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.LASTNAME)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.DOB)),

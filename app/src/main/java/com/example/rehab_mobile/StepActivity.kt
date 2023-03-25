@@ -138,7 +138,9 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
                 val currentSteps = totalSteps.toInt() - previousTotalSteps.toInt()
                 stepsTaken.text = currentSteps.toString()
 //                stepsTaken.text = step.toString()
-                stepChecker(currentSteps)
+                if(stepChecker(currentSteps)){
+                    event!!.values[0] = 0f
+                }
                 cirbar.apply{
                     setProgressWithAnimation(currentSteps.toFloat())
                 }
@@ -154,7 +156,7 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
         stepsTakenTv.text = savedNumber.toInt().toString()
     }
 
-    fun stepChecker(step: Int){
+    fun stepChecker(step: Int) : Boolean{
         if(step >= 100){
             Toast.makeText(this,"Congratulations you have completed the exercise", Toast.LENGTH_SHORT).show()
             val calendar = Calendar.getInstance()
@@ -166,7 +168,6 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
             if(dbHelper.searchUserPoint(username!!).isEmpty()){
                 dbHelper.insertPoint(username!!,0)
             }
-//
 
                 //Update db
                 val currentData = dbHelper.searchStepActivityRecords(username!!,formattedDate)[0]
@@ -175,9 +176,10 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
                 val newStepValue = currentData.stepitup + step
                 dbHelper.updateStepActivityRecords(formattedDate,username!!,newStepValue)
                 dbHelper.updateUserPoint(username!!,newPoints)
-
 //            resetSteps()
+            return true
         }
+        return false
     }
     fun resetStepsBtn(view: View){
         var stepsTakenTv = findViewById<TextView>(R.id.stepsTaken)

@@ -193,7 +193,7 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
 
     fun stepChecker(step: Int) : Boolean{
         if(step == totalMax){
-            Log.d("Activity Complete:", totalMax.toString())
+            Log.d("Activity Complete", totalMax.toString())
             Toast.makeText(this,"Congratulations you have completed the exercise", Toast.LENGTH_SHORT).show()
             val calendar = Calendar.getInstance()
             val dateFormat = SimpleDateFormat("yyyy-MM-dd")
@@ -212,7 +212,6 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
                 dbHelper.updateUserPoint(username!!,newPoints)
             return true
         }
-        Log.d("Outside Total Max:", totalMax.toString())
         return false
     }
 

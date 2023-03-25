@@ -17,18 +17,6 @@
         android:layout_marginTop="10dp"
         android:src="@drawable/home" />
 
-    <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/viewAccountBtn"
-        android:layout_width="43dp"
-        android:layout_height="43dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="358dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="11dp"
-        android:onClick="viewStatistics"
-        android:src="@drawable/information" />
-
     <com.mikhaellopez.circularprogressbar.CircularProgressBar
         android:id="@+id/progress_circular"
         android:layout_width="200dp"
@@ -61,18 +49,32 @@
         />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/resetBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="57dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="154dp"
+        android:background="#E4D0C4"
+        android:onClick="resetStepsBtn"
+        android:text="Reset"
+        android:textColor="#576A8A" />
+    <Button
+        android:id="@+id/viewStatsBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="159dp"
-        android:layout_marginTop="57dp"
-        android:layout_marginEnd="164dp"
-        android:layout_marginBottom="154dp"
         android:background="#E4D0C4"
-        android:onClick="resetStepsBtn"
-        android:text="Reset"
+        android:layout_marginBottom="80dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginStart="80dp"
+        android:onClick="viewStatistics"
+        android:text="View Statistics"
         android:textColor="#576A8A" />
 </RelativeLayout>

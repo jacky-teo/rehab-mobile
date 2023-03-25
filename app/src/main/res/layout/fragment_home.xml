@@ -157,7 +157,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/stepActivityLayout"
+        android:id="@+id/stepInfoActivityLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
@@ -168,7 +168,6 @@
         <com.mikhaellopez.circularimageview.CircularImageView
             android:layout_width="48dp"
             android:layout_height="48dp"
-
             android:layout_marginStart="8dp"
             android:layout_marginEnd="12dp"
             android:src="@drawable/steps" />

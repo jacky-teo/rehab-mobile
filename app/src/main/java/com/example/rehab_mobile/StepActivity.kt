@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
+import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -30,7 +31,7 @@ import kotlin.math.sqrt
 class StepActivity : AppCompatActivity(), SensorEventListener {
     // Layout caller
     private lateinit var mainLayout: View
-    private lateinit var bottomLayout: View
+//    private lateinit var bottomLayout: View
 
     private var magnitudePreviousStep: Double = 0.0
     private val ACTIVITY_RECOGNITION_REQUEST_CODE: Int =100
@@ -38,14 +39,20 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
     private var running: Boolean = false
     private var totalSteps = 0f
     private var previousTotalSteps = 0f
+    private var currentSteps = 0
+    private var savedNumber = 0f
     private var username: String? = ""
+
+    private var totalMax = 0
     private lateinit var myAdapter: ArrayAdapter<String>
     private lateinit var dbHelper: DatabaseHelper
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainLayout = layoutInflater.inflate(R.layout.activity_step,null)
-        bottomLayout = layoutInflater.inflate(R.layout.bottom_sheet,null)
+
+
         setContentView(R.layout.activity_step)
         val sharedPreference = getSharedPreferences("rehapp_login", Context.MODE_PRIVATE)
         username = sharedPreference.getString("username","")
@@ -53,9 +60,10 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
             requestPermission()
         }
         loadData()
-//        resetSteps()
+        resetSteps()
         dbHelper = DatabaseHelper(this)
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        totalMax = intent.getStringExtra("totalMax")!!.toInt()
     }
 
     private fun requestPermission() {
@@ -109,8 +117,9 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
         sensorManager?.unregisterListener(this)
     }
     override fun onSensorChanged(event: SensorEvent?) {
-        var stepsTaken = findViewById<TextView>(R.id.stepsTaken)
+        var stepsTakenTv = findViewById<TextView>(R.id.stepsTaken)
         var cirbar = findViewById<CircularProgressBar>(R.id.progress_circular)
+        var totalMaxTv = findViewById<TextView>(R.id.totalMax)
         if(event!!.sensor.type == Sensor.TYPE_ACCELEROMETER){
             // we need to detect the magnitutede
             val xaccel: Float = event.values[0]
@@ -123,7 +132,7 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
                 totalSteps++
             }
             val step: Int = totalSteps.toInt()
-            stepsTaken.text = step.toString()
+            stepsTakenTv.text = step.toString()
             stepChecker(step)
             cirbar.apply {
                 setProgressWithAnimation(step.toFloat())
@@ -131,52 +140,69 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
         }
         else{
             if (running){
-                // On app load check if previous steps is already more than 100 if yes then reset
+                totalMaxTv.text = "/ ${totalMax}"
                 totalSteps = event!!.values[0]
-                if (event!!.values[0] >=100){
-                    event!!.values[0] = 0f
-                    stepsTaken.text = 0.toString()
-                }
-                Log.d("totalSteps",totalSteps.toString())
-                Log.d("Previous Total Steps",previousTotalSteps.toString())
-                val currentSteps = totalSteps.toInt() - previousTotalSteps.toInt()
-                stepsTaken.text = currentSteps.toString()
+                currentSteps = totalSteps.toInt() - previousTotalSteps.toInt()
+                Log.d("Running Event Listener Current Steps", currentSteps.toString())
                 if(stepChecker(currentSteps)){
+                    Log.d("Running Reset Steps and Adding Points","")
                     event!!.values[0] = 0f
                     previousTotalSteps = 0f
+                    totalSteps = 0f
+                    currentSteps = 0
                     cirbar.apply{
                         setProgressWithAnimation(0f)
                     }
                 }
-                cirbar.apply{
-                    setProgressWithAnimation(currentSteps.toFloat())
+                else{
+                    totalMaxTv.text = "/ ${totalMax}"
+                    stepsTakenTv.text = currentSteps.toString()
+                    cirbar.apply{
+                        setProgressWithAnimation(currentSteps.toFloat())
+                    }
+                    if(currentSteps > totalMax){
+                        Toast.makeText(this,"Please Press Reset To Start Exercise", Toast.LENGTH_SHORT).show()
+                        stepsTakenTv.text = ""
+                        totalMaxTv.text = ""
+                    }
                 }
+
             }
         }
     }
 
     private fun loadData(){
-        val sharedPreferences =getSharedPreferences("steps",Context.MODE_PRIVATE)
-        val savedNumber: Float= sharedPreferences.getFloat("currentstep",0f)
-        previousTotalSteps = savedNumber
+        Log.d("Running On Load Current Steps", currentSteps.toString())
         var stepsTakenTv = findViewById<TextView>(R.id.stepsTaken)
-        stepsTakenTv.text = savedNumber.toInt().toString()
+        var sharedPreferences =getSharedPreferences("steps",Context.MODE_PRIVATE)
+        savedNumber = sharedPreferences.getFloat("currentstep",0f)
+        if (savedNumber >= 100f){
+            previousTotalSteps = 0f
+            savedNumber = 0f
+            val editor = sharedPreferences.edit()
+            editor.putFloat("currentstep",previousTotalSteps)
+            editor.apply()
+            stepsTakenTv.text = savedNumber.toInt().toString()
+        }
+        else{
+            previousTotalSteps = savedNumber
+            stepsTakenTv.text = savedNumber.toInt().toString()
+        }
 
     }
 
     fun stepChecker(step: Int) : Boolean{
-        if(step == 100){
+        if(step == totalMax){
+            Log.d("Activity Complete:", totalMax.toString())
             Toast.makeText(this,"Congratulations you have completed the exercise", Toast.LENGTH_SHORT).show()
             val calendar = Calendar.getInstance()
             val dateFormat = SimpleDateFormat("yyyy-MM-dd")
             val currentDate = calendar.time
             val formattedDate = dateFormat.format(currentDate)
-
             // Find if entry exist. If does exist for this user and today, update it to db else
             if(dbHelper.searchUserPoint(username!!).isEmpty()){
                 dbHelper.insertPoint(username!!,0)
             }
-
                 //Update db
                 val currentData = dbHelper.searchStepActivityRecords(username!!,formattedDate)[0]
                 val currentUserPoints = dbHelper.searchUserPoint(username!!)[0]
@@ -184,14 +210,29 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
                 val newStepValue = currentData.stepitup + step
                 dbHelper.updateStepActivityRecords(formattedDate,username!!,newStepValue)
                 dbHelper.updateUserPoint(username!!,newPoints)
-//            resetSteps()
             return true
         }
+        Log.d("Outside Total Max:", totalMax.toString())
         return false
     }
+
+    fun resetSteps(){
+        if(currentSteps >= 100f){
+            currentSteps  = 0
+            previousTotalSteps = 0f
+            val stepsTakenTv = findViewById<TextView>(R.id.stepsTaken)
+            val totalMaxTv = findViewById<TextView>(R.id.totalMax)
+            var cirbar = findViewById<CircularProgressBar>(R.id.progress_circular)
+            stepsTakenTv.text = 0.toString()
+            totalMaxTv.text = "/ ${totalMax}"
+            cirbar.apply {
+                setProgressWithAnimation(0.toFloat())
+            }
+        }
+    }
     fun resetStepsBtn(view: View){
-        var stepsTakenTv = findViewById<TextView>(R.id.stepsTaken)
-        var cirbar = findViewById<CircularProgressBar>(R.id.progress_circular)
+        val stepsTakenTv = findViewById<TextView>(R.id.stepsTaken)
+        val cirbar = findViewById<CircularProgressBar>(R.id.progress_circular)
         stepsTakenTv.text = 0.toString()
         previousTotalSteps = totalSteps
         val sharedPreferences = getSharedPreferences("steps",Context.MODE_PRIVATE)
@@ -200,32 +241,13 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
         editor.apply()
         cirbar.apply {setProgressWithAnimation(0f)  }
     }
+
     fun backToMainButton(view: View){
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
     }
-    fun viewStatistics(view: View) {
-        val bottomSheetDialog = BottomSheetDialog(this)
-        bottomSheetDialog.setContentView(R.layout.bottom_sheet)
-        val listView = bottomSheetDialog.findViewById<ListView>(R.id.activityInfoListView)
-        val userActivities = dbHelper.searchStepUserActivityRecords(username!!)
-        val userDataList = ArrayList<String>()
-        for(data in userActivities){
-            val dataString = "Date: "+ data.activtydate + " \n" + "Step It Up (no.of Steps): "+ data.stepitup.toString()+ "\n-------------"
-            userDataList.add(dataString)
-        }
-        myAdapter = ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,userDataList)
-        listView?.adapter = myAdapter
-        bottomSheetDialog.show()
-//        bottomLayout.findViewById<Button>(R.id.btn_close).setOnClickListener {
-//            bottomSheetDialog.dismiss()
-//        }
-    }
-//    fun closeStatistics(view: View){
-//        val bottomSheetDialog = BottomSheetDialog(this)
-//        bottomSheetDialog.setContentView(R.layout.bottom_sheet)
-//        bottomSheetDialog.dismiss()
-//    }
+
+
 
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
 

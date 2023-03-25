@@ -82,9 +82,9 @@ class Home : Fragment() {
         dailyBallTv.text = currentBallData.ballbalance.toString()
         dailyStepTv.text = currentStepData.stepitup.toString()
 
-        val stepActivityLayout = act.findViewById<LinearLayout>(R.id.stepActivityLayout) as LinearLayout
+        val stepActivityLayout = act.findViewById<LinearLayout>(R.id.stepInfoActivityLayout) as LinearLayout
         stepActivityLayout.setOnClickListener {
-            val intent = Intent(act, StepActivity::class.java)
+            val intent = Intent(act, StepInfoActivity::class.java)
             act.startActivity(intent)
             act.finish()
         }

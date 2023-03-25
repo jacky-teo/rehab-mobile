@@ -6,10 +6,68 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".StepInfoActivity">
-
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="step info activity" />
+        android:text="Step-It-Up! Game"
+        android:layout_gravity="center"
+        android:textSize="30sp"
+        android:layout_marginBottom="100sp"
+        android:layout_marginTop="50sp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="20dp"
+            android:text="Max Steps"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:hint="Please enter number of steps for activity (min 100)"
+            android:id="@+id/maxSteps"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Start Game"
+            android:id="@+id/startGameBtn"
+            android:onClick="startGameBtn"
+            android:background="#E5D1C5"
+            android:textColor="#576A8B"
+            android:layout_marginRight="10sp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Statistics"
+            android:id="@+id/statistics"
+            android:onClick="viewStatistics"
+            android:background="@android:color/transparent"
+            android:textColor="#576A8B"/>
+    </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Back"
+        android:id="@+id/backBtn"
+        android:onClick="backBtn"
+        android:textColor="#000000"/>
 </LinearLayout>

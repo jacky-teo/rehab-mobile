@@ -43,7 +43,7 @@
         android:id="@+id/totalMax"
         android:layout_centerInParent="true"
         android:layout_below="@+id/stepsTaken"
-        android:text="/100"
+
         android:textColor="#576A8A"
         android:textSize="14sp"
         />
@@ -61,7 +61,7 @@
         android:layout_marginBottom="154dp"
         android:background="#E4D0C4"
         android:onClick="resetStepsBtn"
-        android:text="Reset"
+        android:text="Start"
         android:textColor="#576A8A" />
 
 </RelativeLayout>

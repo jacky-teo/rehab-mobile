@@ -25,7 +25,9 @@ class StepInfoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_step_info)
         bottomLayout = layoutInflater.inflate(R.layout.bottom_sheet,null)
         val sharedPreference = getSharedPreferences("rehapp_login", Context.MODE_PRIVATE)
+        val maxStepsTv = findViewById<EditText>(R.id.maxSteps)
         username = sharedPreference.getString("username","")
+
     }
     fun viewStatistics(view: View) {
         val bottomSheetDialog = BottomSheetDialog(this)
@@ -44,11 +46,14 @@ class StepInfoActivity : AppCompatActivity() {
     fun startGameBtn(view: View) {
         val maxStepsTv = findViewById<EditText>(R.id.maxSteps)
         if(maxStepsTv.text.toString() == ""){
-            Toast.makeText(this,"Max Steps cannot be empty", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"Max steps cannot be empty", Toast.LENGTH_SHORT).show()
         }else{
             totalMax= maxStepsTv.text.toString().toInt()
             if(totalMax < 100){
                 Toast.makeText(this,"You cannot have less than 100 steps", Toast.LENGTH_SHORT).show()
+            }
+            else if (totalMax %100!= 0){
+                Toast.makeText(this,"Max steps must be in 100s", Toast.LENGTH_SHORT).show()
             }
             else{
                 val stepIntent = Intent(this, StepActivity::class.java)

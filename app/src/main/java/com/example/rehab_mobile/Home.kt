@@ -46,40 +46,42 @@ class Home : Fragment() {
         // Check if current day's activity is empty
         val todayDateFormat  = SimpleDateFormat("yyyy-MM-dd")
         val todayDateFormatted = todayDateFormat.format(currentDate)
-        if(dbHelper.searchStepActivityRecords(username!!,todayDateFormatted).isEmpty()){
-            // Create entry for today along with the points
-            dbHelper.insertStepActivity(username!!,todayDateFormatted,0)
-        }
 
-        if(dbHelper.searchBallActivityRecords(username!!,todayDateFormatted).isEmpty()){
-            // Create entry for today along with the points
-            dbHelper.insertBallActivity(username!!,todayDateFormatted,0)
-        }
         //Set Data for summary Segment
         val summaryBallTv = act!!.findViewById<TextView>(R.id.ballSummary)
         val stepSummaryTv = act!!.findViewById<TextView>(R.id.stepSummary)
         var allSteps = 0
         var allBalls = 0
         val stepActivity = dbHelper.searchStepUserActivityRecords(username!!)
-        val ballActivity = dbHelper.searchBallUserActivityRecords(username!!)
+        if(dbHelper.searchStepActivityRecords(username!!,todayDateFormatted).isEmpty()){
+            // Create entry for today along with the points
+            dbHelper.insertStepActivity(username!!,todayDateFormatted,0)
+        }
+        if(dbHelper.searchBallUserActivityRecords(username!!).isNotEmpty()){
+            val ballActivity = dbHelper.searchBallUserActivityRecords(username!!)
+            allBalls = ballActivity[0].ballbalance
+        }
+//        val ballActivity = dbHelper.searchBallUserActivityRecords(username!!)
         for(dat in stepActivity){
             allSteps += dat.stepitup
 
         }
-        for (dat in ballActivity){
-            allBalls += dat.ballbalance
-        }
+
         summaryBallTv.text = allBalls.toString()
         stepSummaryTv.text = allSteps.toString()
 
         // Set the data to be shown on home screen for daily activities
         val activityStepData = dbHelper.searchStepActivityRecords(username!!,todayDateFormatted)
-        val activityBallData = dbHelper.searchBallActivityRecords(username!!,todayDateFormatted)
         val dailyBallTv = act!!.findViewById<TextView>(R.id.todayBallGame)
         val dailyStepTv = act!!.findViewById<TextView>(R.id.todayStepGame)
         val currentStepData = activityStepData[0]
-        val currentBallData = activityBallData[0]
-        dailyBallTv.text = currentBallData.ballbalance.toString()
+        if (dbHelper.searchBallUserActivityTodayDescRecords(username!!, todayDateFormatted).isNotEmpty()){
+            val activityBallData = dbHelper.searchBallUserActivityTodayDescRecords(username!!, todayDateFormatted)
+            val currentBallData = activityBallData[0]
+            dailyBallTv.text = currentBallData.ballbalance.toString()
+        }else{
+            dailyBallTv.text = "0"
+        }
         dailyStepTv.text = currentStepData.stepitup.toString()
 
         val stepActivityLayout = act.findViewById<LinearLayout>(R.id.stepInfoActivityLayout) as LinearLayout

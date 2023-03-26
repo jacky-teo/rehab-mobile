@@ -64,7 +64,7 @@ class BallActivity : AppCompatActivity(), SensorEventListener {
             if (circle.x < (0 - circle.width) || circle.x > getScreenWidth(this)){
                 gameOver()
             }
-            if (circle.y < (0 - circle.width) || circle.y > (getScreenHeight(this) - 300)){
+            if (circle.y < (0 - circle.width) || circle.y > (getScreenHeight(this) + 80)){
                 gameOver()
             }
         }

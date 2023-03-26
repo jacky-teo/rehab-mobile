@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import java.util.Date
 
 class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
     Constants.DB_NAME,
@@ -259,7 +260,7 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
     // Read Single User Ball Activity Info
     fun searchBallUserActivityRecords(username: String): ArrayList<BallActivityModelRecord>{
         val recordList = ArrayList<BallActivityModelRecord>()
-        val selectQuery = "SELECT * FROM ${Constants.BALL_ACTIVITY_TABLE_NAME} WHERE ${Constants.USERNAME} LIKE '$username'"
+        val selectQuery = "SELECT * FROM ${Constants.BALL_ACTIVITY_TABLE_NAME} WHERE ${Constants.USERNAME} LIKE '$username' ORDER BY ${Constants.BALLBALANCE} DESC"
         val db = this.writableDatabase
         val cursor =db.rawQuery(selectQuery,null)
         if(cursor.moveToNext()){
@@ -276,6 +277,27 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
         db.close()
         return recordList
     }
+    // Read Single User Ball Activity Info + filtered to today + sorted by desc
+    fun searchBallUserActivityTodayDescRecords(username: String, activitydate: String ): ArrayList<BallActivityModelRecord>{
+        val recordList = ArrayList<BallActivityModelRecord>()
+        val selectQuery = "SELECT * FROM ${Constants.BALL_ACTIVITY_TABLE_NAME} WHERE ${Constants.USERNAME} LIKE '$username'AND ${Constants.ACTIVITYDATE} LIKE '$activitydate' ORDER BY ${Constants.BALLBALANCE} DESC"
+        val db = this.writableDatabase
+        val cursor =db.rawQuery(selectQuery,null)
+        if(cursor.moveToNext()){
+            do{
+                val ballActivityModelRecord = BallActivityModelRecord(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.USERNAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.ACTIVITYDATE)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(Constants.BALLBALANCE)),
+                )
+                recordList.add(ballActivityModelRecord)
+            }while(cursor.moveToNext())
+        }
+        db.close()
+        return recordList
+    }
+
 
 
     // Read All User Info

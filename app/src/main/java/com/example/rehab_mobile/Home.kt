@@ -31,7 +31,6 @@ class Home : Fragment() {
         val act = activity
         dbHelper = DatabaseHelper(requireActivity())
 
-
         val calendar = Calendar.getInstance()
         val currentDate = calendar.time
         val dateFormat = SimpleDateFormat("EEEE, dd MMM")

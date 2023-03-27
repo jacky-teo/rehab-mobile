@@ -2,6 +2,7 @@ package com.example.rehab_mobile
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -59,11 +60,12 @@ class AwardsActivity : AppCompatActivity() {
         username = sharedPreference.getString("username","")
 
         // TO BE REMOVED !! - Updating user points for testing purposes
-        dbHelper.updateUserPoint(username!!, 1400)
+//        dbHelper.updateUserPoint(username!!, 1400)
         // TO BE REMOVED !! - End
 
         // display points
         getPoints()
+
     }
 
     // update button styling
@@ -103,8 +105,9 @@ class AwardsActivity : AppCompatActivity() {
 
     // get user points
     private fun getPoints() {
-        availPoints = dbHelper.searchUserPoint(username!!)[0].points
-
+        if (dbHelper.searchUserPoint(username!!).isNotEmpty()){
+            availPoints = dbHelper.searchUserPoint(username!!)[0].points
+        }
         // display points on awards page
         val pointsView = findViewById<TextView>(R.id.availablePoints)
         pointsView.text = availPoints.toString()
@@ -127,7 +130,7 @@ class AwardsActivity : AppCompatActivity() {
 
         // reload points shown
         getPoints()
-
+        Log.d("userPoints", dbHelper.searchUserPoint(username!!)[0].points.toString())
     }
 
     // new redemption of voucher
@@ -197,6 +200,11 @@ class AwardsActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    fun backToMainButton(view: View) {
+        val homeIntent = Intent(this, HomeActivity::class.java)
+        startActivity(homeIntent)
     }
 
 }

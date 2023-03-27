@@ -28,13 +28,21 @@ class User : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val act = activity
         dbHelper = DatabaseHelper(requireActivity())
-        val userNameTv = act!!.findViewById<TextView>(R.id.userName)
+        val nameTv = act!!.findViewById<TextView>(R.id.nameTv)
+        val usernameTv = act!!.findViewById<TextView>(R.id.usernameTv)
+        val birthdayTv = act!!.findViewById<TextView>(R.id.birthdayTv)
+        val genderTv = act!!.findViewById<TextView>(R.id.genderTv)
+        val bloodTypeTv = act!!.findViewById<TextView>(R.id.bloodTypeTv)
         val sharedPreference =requireActivity().getSharedPreferences("rehapp_login", Context.MODE_PRIVATE)
         username = sharedPreference.getString("username","")
         //Grab current user details
-        val user = dbHelper.searchUserRecords(username!!)
-        Log.d("user", user.toString())
-        userNameTv.text = username
+        val user = dbHelper.searchUserRecords(username!!)[0]
+        nameTv.text = user.firstname + " " + user.lastname
+        usernameTv.text = user.username
+        birthdayTv.text = user.dob
+        genderTv.text = user.sex
+        bloodTypeTv.text = user.bloodtype
+
 
     }
 }

@@ -7,7 +7,14 @@
     tools:context=".AwardsActivity"
     android:paddingTop="40dp"
     android:id="@+id/awardsLayout">
-
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="12dp"
+        android:onClick="backToMainButton"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/home" />
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"

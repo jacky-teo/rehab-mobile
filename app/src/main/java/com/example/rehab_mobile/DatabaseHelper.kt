@@ -39,7 +39,9 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
         lastname: String?,
         dob: String?,
         sex: String?,
-        bloodtype: String?
+        bloodtype: String?,
+        height: String?,
+        weight: String?
     ): Long {
         val db = this.writableDatabase
         val values = ContentValues()
@@ -50,6 +52,8 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
         values.put(Constants.DOB, dob)
         values.put(Constants.SEX, sex)
         values.put(Constants.BLOODTYPE,bloodtype)
+        values.put(Constants.HEIGHT, height)
+        values.put(Constants.WEIGHT, weight)
         val id = db.insert(Constants.USER_TABLE_NAME, null, values)
         db.close()
         return id
@@ -71,7 +75,9 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.LASTNAME)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.DOB)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.SEX)),
-                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.BLOODTYPE))
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.BLOODTYPE)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.HEIGHT)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.WEIGHT))
                 )
                 recordList.add(userModelRecord)
             }while(cursor.moveToNext())
@@ -95,7 +101,9 @@ class DatabaseHelper(context: Context?): SQLiteOpenHelper(context,
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.LASTNAME)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.DOB)),
                     cursor.getString(cursor.getColumnIndexOrThrow(Constants.SEX)),
-                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.BLOODTYPE))
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.BLOODTYPE)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.HEIGHT)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(Constants.WEIGHT))
                 )
                 recordList.add(userModelRecord)
             }while(cursor.moveToNext())

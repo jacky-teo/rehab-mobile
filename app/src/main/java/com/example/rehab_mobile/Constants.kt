@@ -17,6 +17,8 @@ object Constants {
     const val DOB = "DOB"
     const val SEX = "SEX"
     const val BLOODTYPE = "BLOODTYPE"
+    const val WEIGHT = "WEIGHT"
+    const val HEIGHT = "HEIGHT"
 
 
     const val STEPITUP = "STEPITUP"
@@ -40,7 +42,9 @@ object Constants {
             LASTNAME + " TEXT, " +
             DOB + " TEXT, " +
             SEX + " TEXT, " +
-            BLOODTYPE + " TEXT "
+            BLOODTYPE + " TEXT " +
+            HEIGHT + " TEXT " +
+            WEIGHT + "TEXT "
             + "); ")
 
     //Create Step Activity Table Query

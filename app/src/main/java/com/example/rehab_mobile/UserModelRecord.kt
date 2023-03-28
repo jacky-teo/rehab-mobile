@@ -8,6 +8,8 @@ class UserModelRecord (var id: Int,
                        var dob: String,
                        var sex: String,
                        var bloodtype: String,
+                       var height: String,
+                       var weight: String
 ) {
 
 

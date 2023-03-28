@@ -84,6 +84,8 @@ class RegistrationActivity : AppCompatActivity() {
         val firstName = findViewById<EditText>(R.id.firstName).text.toString()
         val lastName = findViewById<EditText>(R.id.lastName).text.toString()
         val dob = findViewById<Button>(R.id.dob).hint.toString()
+        val height = findViewById<EditText>(R.id.height).text.toString()
+        val weight = findViewById<EditText>(R.id.weight).text.toString()
         val password = findViewById<EditText>(R.id.password).text.toString()
         val cfmPassword = findViewById<EditText>(R.id.confirmPassword).text.toString()
         if (password != cfmPassword){
@@ -105,10 +107,11 @@ class RegistrationActivity : AppCompatActivity() {
             user.createUserWithEmailAndPassword(username,password).addOnCompleteListener(RegistrationActivity()){
                 task ->
                 if(task.isSuccessful){
-                    dbHelper.insertUserInfo(username,firstName,lastName,dob,sex,bloodType)
+                    dbHelper.insertUserInfo(username,firstName,lastName,dob,sex,bloodType,height,weight)
                     val myIntent = Intent(this, MainActivity::class.java)
                     startActivity(myIntent)
                     Toast.makeText( this,"Successfully registered!", Toast.LENGTH_SHORT).show()
+                    Log.d("user", dbHelper.searchUserRecords(username).toString())
                 }
                 else
                 {

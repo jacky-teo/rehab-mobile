@@ -3,6 +3,7 @@ package com.example.rehab_mobile
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -14,11 +15,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.rehab_mobile.databinding.QrPopUpBinding
+import com.google.android.gms.vision.CameraSource
+import com.google.android.gms.vision.barcode.Barcode
+import com.google.android.gms.vision.barcode.BarcodeDetector
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
+import com.google.zxing.integration.android.IntentIntegrator
+import com.google.zxing.integration.android.IntentResult
 import com.google.zxing.multi.MultipleBarcodeReader
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import java.text.SimpleDateFormat
@@ -28,6 +36,8 @@ class AwardsActivity : AppCompatActivity() {
 
     private var username: String? = ""
     private var availPoints: Int = 0
+    lateinit var barcodeDetector: BarcodeDetector
+    lateinit var cameraSource: CameraSource
 
     // voucher value and points
     val voucherPoints = mapOf("v5" to 600, "v10" to 1000, "v15" to 1400)
@@ -60,7 +70,7 @@ class AwardsActivity : AppCompatActivity() {
         username = sharedPreference.getString("username","")
 
         // TO BE REMOVED !! - Updating user points for testing purposes
-//        dbHelper.updateUserPoint(username!!, 1400)
+        dbHelper.updateUserPoint(username!!, 1400)
         // TO BE REMOVED !! - End
 
         // display points
@@ -140,6 +150,9 @@ class AwardsActivity : AppCompatActivity() {
 
         // check if user sufficient points for voucher redemption
         if (availPoints >= voucherPoints[viewTag]!!) {
+            //Camera access
+            requestCameraPermission()
+
             // show pop up with generate qr code
             val popUpBinding = layoutInflater.inflate(R.layout.qr_pop_up, null)
 
@@ -148,43 +161,22 @@ class AwardsActivity : AppCompatActivity() {
 
             popDialog.setCancelable(true)
             popDialog.window?.setBackgroundDrawable(ColorDrawable(Color.argb(29,0, 0, 0)))
-
-            // set onclicklistener to redeem button
-            val redeemBtn = popDialog.findViewById<Button>(R.id.redeemedBtn)
-            redeemBtn.setOnClickListener() {
-                // deduct points for redemption
-                redeemNew(viewTag.toString())
-
-                // dismiss dialog after voucher redeemed
-                popDialog.dismiss()
-
-                // show redemption complete message
-                val toast = Toast.makeText(this, "Voucher redeemed!", Toast.LENGTH_SHORT)
-                toast.show()
-            }
-
+//
+//            // set onclicklistener to redeem button
+//            val redeemBtn = popDialog.findViewById<Button>(R.id.redeemedBtn)
+//            redeemBtn.setOnClickListener() {
+//                // deduct points for redemption
+//                redeemNew(viewTag.toString())
+//
+//                // dismiss dialog after voucher redeemed
+//                popDialog.dismiss()
+//
+//                // show redemption complete message
+//                val toast = Toast.makeText(this, "Voucher redeemed!", Toast.LENGTH_SHORT)
+//                toast.show()
+//            }
+//
             popDialog.show()
-
-            // generate QR code and load
-            val qrIv = popUpBinding.findViewById<ImageView>(R.id.qrImage)
-
-            // initialise qr code writer
-            val codeWriter = MultiFormatWriter()
-
-            // create qr code
-            try {
-                val matrix = codeWriter.encode(viewTag.toString(), BarcodeFormat.QR_CODE, 400, 400)
-                val encoder = BarcodeEncoder()
-                val bitmap = encoder.createBitmap(matrix)
-                qrIv.setImageBitmap(bitmap)
-
-            } catch (e: WriterException) {
-                e.printStackTrace()
-            }
-
-
-            // https://ihilalahmadd.medium.com/how-to-generate-qr-code-in-android-5a2a7edf11c
-
             // set close dialog button
             val closeButton = popUpBinding.findViewById<ImageView>(R.id.closeBtn)
             closeButton.setOnClickListener() {
@@ -205,6 +197,69 @@ class AwardsActivity : AppCompatActivity() {
     fun backToMainButton(view: View) {
         val homeIntent = Intent(this, HomeActivity::class.java)
         startActivity(homeIntent)
+    }
+
+    //Request Camera access functions
+    private val CAMERA_PERMISSION_REQUEST_CODE = 100
+
+    private fun requestCameraPermission() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(android.Manifest.permission.CAMERA),
+                CAMERA_PERMISSION_REQUEST_CODE
+            )
+        } else {
+            // Permission already granted. Start the scanner
+            startScanner()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted
+                startScanner()
+            } else {
+                // Permission denied
+                Toast.makeText(this, "Camera permission denied", Toast.LENGTH_SHORT ).show()
+            }
+        }
+    }
+//    private fun startScanner() {
+//        barcodeDetector = BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.ALL_FORMATS).build()
+//        cameraSource = CameraSource.Builder(this, barcodeDetector)
+//            .setRequestedPreviewSize(1920,1080)
+//            .setAutoFocusEnabled(true)
+//            .build()
+//    }
+    // Start the scanner
+    private fun startScanner() {
+        IntentIntegrator(this).initiateScan()
+    }
+
+    // Handle the result of the scan
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val result: IntentResult? = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        if (result != null) {
+            if (result.contents == null) {
+                // The scan was cancelled
+                Toast.makeText(this, "Scan cancelled", Toast.LENGTH_SHORT).show()
+            } else {
+                // The scan was successful
+                Toast.makeText(this, "Scan result: ${result.contents}", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
 }

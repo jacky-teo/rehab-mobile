@@ -71,6 +71,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Blood Type" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Height" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Weight" />
 
                 </LinearLayout>
                 <LinearLayout
@@ -95,8 +103,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="birthday"
+                        android:text="AB"
                         android:id="@+id/bloodTypeTv"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1.5m"
+                        android:id="@+id/heightTv"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="50kg"
+                        android:id="@+id/weightTv"/>
 
                 </LinearLayout>
             </LinearLayout>

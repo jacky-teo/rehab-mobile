@@ -33,6 +33,8 @@ class User : Fragment() {
         val birthdayTv = act!!.findViewById<TextView>(R.id.birthdayTv)
         val genderTv = act!!.findViewById<TextView>(R.id.genderTv)
         val bloodTypeTv = act!!.findViewById<TextView>(R.id.bloodTypeTv)
+        val heightTv = act!!.findViewById<TextView>(R.id.heightTv)
+        val weightTv = act!!.findViewById<TextView>(R.id.weightTv)
         val sharedPreference =requireActivity().getSharedPreferences("rehapp_login", Context.MODE_PRIVATE)
         username = sharedPreference.getString("username","")
         //Grab current user details
@@ -42,6 +44,8 @@ class User : Fragment() {
         birthdayTv.text = user.dob
         genderTv.text = user.sex
         bloodTypeTv.text = user.bloodtype
+        heightTv.text = user.height + " m"
+        weightTv.text = user.weight + " kg"
 
 
     }

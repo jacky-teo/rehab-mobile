@@ -20,4 +20,5 @@ class AvailableAwards : Fragment() {
         return inflater.inflate(R.layout.fragment_available_awards, container, false)
     }
 
+
 }

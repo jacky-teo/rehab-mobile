@@ -32,8 +32,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
+            android:layout_marginRight="10dp"
             android:inputType="number"
-            android:hint="Please enter number of steps for activity (min 100)"
+            android:hint="Min. Steps 100"
             android:id="@+id/maxSteps"/>
 
     </LinearLayout>

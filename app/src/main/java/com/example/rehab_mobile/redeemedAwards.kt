@@ -65,8 +65,9 @@ class redeemedAwards : Fragment() {
     // load history of voucher redemption
     private fun loadRedeemedRewards(){
         recordsArrayList = dbHelper.searchUserReward(username!!)
-        val msg = requireActivity()!!.findViewById<TextView>(R.id.redeemedMsg)
 
+
+        val msg = requireActivity()!!.findViewById<TextView>(R.id.redeemedMsg)
         // hide message if redemption records not empty
         if (recordsArrayList.size > 0){
             recordsArrayList.reverse()

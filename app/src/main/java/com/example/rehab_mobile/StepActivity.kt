@@ -68,6 +68,10 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         totalMax = intent.getStringExtra("totalMax")!!.toInt()
         cirbar.progressMax = totalMax.toFloat()
+
+        val startButton = findViewById<Button>(R.id.resetBtn)
+        startButton.visibility = View.VISIBLE
+
         Toast.makeText(this,"Please Press Reset To Start Exercise", Toast.LENGTH_SHORT).show()
     }
 
@@ -207,6 +211,8 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
         val stepsTakenTv = findViewById<TextView>(R.id.stepsTaken)
         val totalMaxTv = findViewById<TextView>(R.id.totalMax)
         val cirbar = findViewById<CircularProgressBar>(R.id.progress_circular)
+        val startButton = findViewById<Button>(R.id.resetBtn)
+        startButton.visibility = View.INVISIBLE
         stepsTakenTv.text = 0.toString()
         totalMaxTv.text = "/ ${totalMax}"
         previousTotalSteps = totalSteps

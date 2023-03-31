@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 
 class User : Fragment() {
     private lateinit var dbHelper: DatabaseHelper
@@ -38,14 +39,21 @@ class User : Fragment() {
         val sharedPreference =requireActivity().getSharedPreferences("rehapp_login", Context.MODE_PRIVATE)
         username = sharedPreference.getString("username","")
         //Grab current user details
-        val user = dbHelper.searchUserRecords(username!!)[0]
-        nameTv.text = user.firstname + " " + user.lastname
-        usernameTv.text = user.username
-        birthdayTv.text = user.dob
-        genderTv.text = user.sex
-        bloodTypeTv.text = user.bloodtype
-        heightTv.text = user.height + " m"
-        weightTv.text = user.weight + " kg"
+        val user = dbHelper.searchUserRecords(username!!)
+        if(! user.isEmpty()){
+            val userData = user[0]
+            nameTv.text = userData.firstname + " " + userData.lastname
+            usernameTv.text = userData.username
+            birthdayTv.text = userData.dob
+            genderTv.text = userData.sex
+            bloodTypeTv.text = userData.bloodtype
+            heightTv.text = userData.height + " m"
+            weightTv.text = userData.weight + " kg"
+        }
+        else{
+            Toast.makeText(act!!,"No User Data", Toast.LENGTH_SHORT).show()
+        }
+
 
 
     }

@@ -58,16 +58,16 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
             requestPermission()
         }
         val cirbar = findViewById<CircularProgressBar>(R.id.progress_circular)
-//        val stepsTakenTv = findViewById<TextView>(R.id.stepsTaken)
-//        stepsTakenTv.text = "0"
-//        cirbar.apply {
-//                setProgressWithAnimation(0f)
-//            }
+        var stepsTakenTv = findViewById<TextView>(R.id.stepsTaken)
 
         dbHelper = DatabaseHelper(this)
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         totalMax = intent.getStringExtra("totalMax")!!.toInt()
         cirbar.progressMax = totalMax.toFloat()
+        cirbar.apply {
+            setProgressWithAnimation(0.toFloat())
+        }
+        stepsTakenTv.text= "0"
 
         val startButton = findViewById<Button>(R.id.resetBtn)
         startButton.visibility = View.VISIBLE
@@ -196,7 +196,8 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
             val currentData = dbHelper.searchStepActivityRecords(username!!,formattedDate)[0]
             val currentUserPoints = dbHelper.searchUserPoint(username!!)[0]
             Log.d("User data", "${currentUserPoints.username} : ${currentUserPoints.points}")
-            val newPoints = currentUserPoints.points + (step*0.1).toInt()
+            val newPoints = currentUserPoints.points  + 100000
+//            + (step*0.1).toInt()
             val newStepValue = currentData.stepitup + totalMax
             dbHelper.updateStepActivityRecords(formattedDate,username!!,newStepValue)
             dbHelper.updateUserPoint(username!!,newPoints)

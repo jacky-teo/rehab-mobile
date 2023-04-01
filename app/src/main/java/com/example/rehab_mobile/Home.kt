@@ -42,6 +42,7 @@ class Home : Fragment() {
         // Get username
         val sharedPreference =requireActivity().getSharedPreferences("rehapp_login", Context.MODE_PRIVATE)
         username = sharedPreference.getString("username","")
+
         // Check if current day's activity is empty
         val todayDateFormat  = SimpleDateFormat("yyyy-MM-dd")
         val todayDateFormatted = todayDateFormat.format(currentDate)

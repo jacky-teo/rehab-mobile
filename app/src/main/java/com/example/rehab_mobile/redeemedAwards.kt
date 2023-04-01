@@ -72,7 +72,6 @@ class redeemedAwards : Fragment() {
         if (recordsArrayList.size > 0){
             recordsArrayList.reverse()
             msg.visibility = View.GONE
-
         } else {
             msg.text = "No Vouchers Redeemed"
         }

@@ -78,30 +78,24 @@ object Constants {
             DATEOFREDEMPTION + " TEXT "
             + "); ")
 
-    //Pre Populate User Table
-//    const val INSERT_USER_DATA = ("INSERT INTO "+ USER_TABLE_NAME +
-//            "( "+ USERNAME +", "+ PASSWORD +", " +
-//            FIRSTNAME+", "+ LASTNAME+", "+
-//            DOB+", "+ SEX+", "+ BLOODTYPE +
-//            " ) VALUES ('admin', 'admin','Jacky','Teo','10/1/2002','Male', 'O+'); ")
     const val INSERT_USER_DATA = ("INSERT INTO "+ USER_TABLE_NAME +
             "( "+ USERNAME +", "+
             FIRSTNAME+", "+ LASTNAME+", "+
             DOB+", "+ SEX+", "+ BLOODTYPE + ", "+ HEIGHT+", "+ WEIGHT +
-            " ) VALUES ('jackyteojianqi@gmail.com','Jacky','Teo','10/1/2002','Male', 'O+', '150m', '70kg'); ")
+            " ) VALUES ('jane@gmail.com','jane','doe','4/3/1997','female', 'AB', '145m', '35kg'); ")
 
     //Pre Populate STEP Activity Table
     const val INSERT_STEP_ACTIVITY_DATA = ("INSERT INTO "+ STEP_ACTIVITY_TABLE_NAME +
             "( "+USERNAME+", "+ ACTIVITYDATE +", " + STEPITUP +
-            " ) VALUES ('jackyteojianqi@gmail.com', '28-2-2022',0); ")
+            " ) VALUES ('jane@gmail.com', '28-2-2022',0); ")
 
     //Pre Populate BALL Activity Table
     const val INSERT_BALL_ACTIVITY_DATA = ("INSERT INTO "+ BALL_ACTIVITY_TABLE_NAME +
             "( "+USERNAME+", "+ ACTIVITYDATE +", " + BALLBALANCE +
-            " ) VALUES ('jackyteojianqi@gmail.com', '28-2-2022',0); ")
+            " ) VALUES ('jane@gmail.com', '28-2-2022',0); ")
 
     //Pre Populate Activity Table
     const val INSERT_POINT_DATA = ("INSERT INTO "+ POINTS_TABLE_NAME +
             "( "+USERNAME+", " + POINTS +
-            " ) VALUES ('jackyteojianqi@gmail.com',0); ")
+            " ) VALUES ('jane@gmail.com',0); ")
 }

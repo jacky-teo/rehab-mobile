@@ -196,8 +196,7 @@ class StepActivity : AppCompatActivity(), SensorEventListener {
             val currentData = dbHelper.searchStepActivityRecords(username!!,formattedDate)[0]
             val currentUserPoints = dbHelper.searchUserPoint(username!!)[0]
             Log.d("User data", "${currentUserPoints.username} : ${currentUserPoints.points}")
-            val newPoints = currentUserPoints.points  + 100000
-//            + (step*0.1).toInt()
+            val newPoints = currentUserPoints.points + (step*0.1).toInt()
             val newStepValue = currentData.stepitup + totalMax
             dbHelper.updateStepActivityRecords(formattedDate,username!!,newStepValue)
             dbHelper.updateUserPoint(username!!,newPoints)

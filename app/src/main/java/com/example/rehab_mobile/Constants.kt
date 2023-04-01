@@ -82,7 +82,7 @@ object Constants {
             "( "+ USERNAME +", "+
             FIRSTNAME+", "+ LASTNAME+", "+
             DOB+", "+ SEX+", "+ BLOODTYPE + ", "+ HEIGHT+", "+ WEIGHT +
-            " ) VALUES ('jane@gmail.com','jane','doe','4/3/1997','female', 'AB', '145m', '35kg'); ")
+            " ) VALUES ('jane@gmail.com','jane','doe','4/3/1997','female', 'AB', '145', '35'); ")
 
     //Pre Populate STEP Activity Table
     const val INSERT_STEP_ACTIVITY_DATA = ("INSERT INTO "+ STEP_ACTIVITY_TABLE_NAME +
@@ -97,5 +97,5 @@ object Constants {
     //Pre Populate Activity Table
     const val INSERT_POINT_DATA = ("INSERT INTO "+ POINTS_TABLE_NAME +
             "( "+USERNAME+", " + POINTS +
-            " ) VALUES ('jane@gmail.com',0); ")
+            " ) VALUES ('jane@gmail.com',10000); ")
 }

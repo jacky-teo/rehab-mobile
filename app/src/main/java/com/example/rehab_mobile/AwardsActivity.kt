@@ -23,7 +23,7 @@ class AwardsActivity : AppCompatActivity() {
     private var availPoints: Int = 0
 
     // voucher value and points
-    val voucherPoints = mapOf("v5" to 5, "v10" to 10, "v15" to 15)
+    val voucherPoints = mapOf("v5" to 600, "v10" to 1000, "v15" to 1400)
     var vpoints = 0
 
     // db helper
@@ -54,7 +54,7 @@ class AwardsActivity : AppCompatActivity() {
         username = sharedPreference.getString("username","")
 
         // TO BE REMOVED !! - Updating user points for testing purposes
-//        dbHelper.updateUserPoint(username!!, 1400)
+//        dbHelper.updateUserPoint(username!!, 1700)
         // TO BE REMOVED !! - End
 
         // display points

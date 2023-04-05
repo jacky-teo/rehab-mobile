@@ -21,11 +21,7 @@ class RecordsAdapter (private val arrayList: ArrayList<RewardModelRecord>) : Rec
     override fun onBindViewHolder(holder: RecordsAdapter.MyViewHolder, position: Int) {
         val item = arrayList[position]
         holder.valueTv.text = "$" + item.vouchervalue.toString()
-
-        // format date and time displayed
-        val dateStrings = item.dateofredemption.split("\t")
-        holder.timeTv.text = dateStrings[0]
-//        holder.timeTv.text = dateStrings[0] + ", " + dateStrings[1]
+        holder.timeTv.text = item.dateofredemption
     }
 
     override fun getItemCount(): Int {
